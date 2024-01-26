@@ -1,6 +1,6 @@
-title: Patty Meza
+title: Patty Meza ECE4160
 logo: /assets/img/logo.png
-description: Minimal is a theme for GitHub Pages.
-show_downloads: true
+description: Hi! This is my home page for my ECE 4160 Labs. I am a Senior MechE student at Cornell University and I am  interested in robotics for extreme environments such as space! I am currently building a bipedal robot for my project team Cornell Cup Robotics!
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
