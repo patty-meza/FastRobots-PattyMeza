@@ -106,7 +106,7 @@ body {
 
 hr {
   margin: 1rem 0;
-  color: blue;
+  color: pink;
   border: 0;
   border-top: 1px solid;
   opacity: 0.25;
@@ -255,7 +255,7 @@ a:hover {
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
-  color: inherit;
+  color: pink;
   text-decoration: none;
 }
 
