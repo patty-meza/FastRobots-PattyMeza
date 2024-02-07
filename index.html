@@ -111,8 +111,26 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Establishing a Bluetooth connection</h3>
                             <div class="subheading mb-3">Computer set up</div>
-                            <p>information highway will close the loop on focusing solely on the bottom line.</p>
-                            <span class="d-none d-lg-block"><img class="w-50" src="images/lab1/bluetoothconnect.png" alt="..." /></span>
+
+                            <div>
+                                <p>I first started by verifying what version of Python and Pip I had using the macOS terminal.
+                                I confirmed I had the latest releases (Python >= 3.9 and pip >= 21.0)</p>
+                                <span class="d-none d-lg-block"><img class="w-50" src="images/lab1/checkvers.png" alt="..." /></span>
+                            </div>
+
+                            <div>
+                                <p>Then I installed the virtual environment using the following commands:</p>
+                                <p>python3 -m pip install --user virtualenv</p>
+                                <p>cd /Users/patty/Documents/fastrobots</p>
+                                <p>python3 -m venv FastRobots_ble</p>
+                                <p>To start the virtual environment use this command:</p>
+                                <p>source FastRobots_ble/bin/activate</p>
+                                <p>To confirm you are in the virtual environment you should see the prefix (FastRobots_ble) before each command</p>
+                                <span class="d-none d-lg-block"><img class="w-50" src="images/lab1/checkvers.png" alt="..." /></span>
+                                <p>Finally, install the appropriate python packages</p>
+                                <p> pip install numpy pyyaml colorama nest_asyncio bleak jupyterlab</p>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
