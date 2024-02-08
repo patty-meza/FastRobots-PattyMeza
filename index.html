@@ -202,7 +202,7 @@
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
                             </div>
 
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 30px;">
                                 <p> What is a UUID? It stands for Universally Unique Identifiers and they help differentiate the 
                                     different kinds of data that we are sending.
                                     Run these two lines in a code block in Jupyter Notebook to generate a new UUID.
@@ -237,7 +237,7 @@
                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/blut.png" alt="..." /></span>
                             </div>
                             
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 30px;">
                                 <p> 1. Send an ECHO command with a string value from the computer to the Artemis board, 
                                     and receive an augmented string on the computer.</p>
                                 <div style="display: flex; align-items: flex-start;">
@@ -246,7 +246,7 @@
                                 </div>
                             </div>
 
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 30px;">
                                 <p> 2. Add a command GET_TIME_MILLIS which makes the robot reply write a string such as “T:123456” to the string characteristic.</p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task2.png" alt="Image 1" /></div>
@@ -254,7 +254,7 @@
                                 </div>
                             </div>
 
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 30px;">
                                 <p> 3. Set up a notification handler in Python to receive the string value from the Artemis board. 
                                     In the callback function, extract the time from the string.</p>
                                 <div style="display: flex; align-items: flex-start;">
@@ -263,7 +263,7 @@
                                 </div>
                             </div>
                             
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 30px;">
                                 <p> 4. Write a loop that gets the current time in milliseconds and sends it to your laptop to be received and processed 
                                     by the notification handler. Collect these values for a few seconds and use the time stamps to determine how fast messages 
                                     can be sent. What is the effective data transfer rate of this method?</p>
@@ -271,6 +271,37 @@
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task4.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task4.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <p> 5. Now create an array that can store time stamps. This array should be defined globally so that other functions can access it if need be. 
+                                    In the loop, rather than send each time stamp, place each time stamp into the array. (Note: you’ll need some extra logic to determine when your array is full so you don’t “over fill” the array.)
+                                    Then add a command SEND_TIME_DATA which loops the array and sends each data point as a string to your laptop to be processed. (You can store these values in a list in python to determine if all 
+                                    the data was sent over.)</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task5.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task5.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <p> 6. Add a second array that is the same size as the time stamp array. Use this array to store temperature readings. Each element in both 
+                                    arrays should correspond, e.e., the first time stamp was recorded at the same time as the first temperature reading. Then add a command GET_TEMP_READINGS 
+                                    that loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler should parse these strings and 
+                                    add populate the data into two lists.</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task6.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task6.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <p> 7. Discuss the differences between these two methods, the advantages and disadvantages of both and the potential scenarios 
+                                    that you might choose one method over the other. How “quickly” can the second method record data? The Artemis board has 384 kB of RAM. Approximately how much data can you store to send without running out of memory?</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/meth1.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/meth2.png" alt="Image 2" /></div>
                                 </div>
                             </div>
                             
