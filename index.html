@@ -120,22 +120,23 @@
 
                             <div style="margin-top: 30px;">
                                 <p>Then I installed the virtual environment using the following commands:
-                                    <br><span class="text-link-color">python3 -m pip install --user virtualenv</span>
-                                    <br><span class="text-link-color">cd /Users/patty/Documents/fastrobots</span>
-                                    <br><span class="text-link-color">python3 -m venv FastRobots_ble</span>
+                                    <br><span class="text-primary">python3 -m pip install --user virtualenv</span>
+                                    <br><span class="text-primary">cd /Users/patty/Documents/fastrobots</span>
+                                    <br><span class="text-primary">python3 -m venv FastRobots_ble</span>
                                 </p>
                                 
                                 <p>To start the virtual environment use this command:
-                                    <br><span class="text-link-color">source FastRobots_ble/bin/activate</span>
+                                    <br><span class="text-primary">source FastRobots_ble/bin/activate</span>
                                 </p>
                                 
                                 <p>To confirm you are in the virtual environment you should see the prefix (FastRobots_ble) before each command:</p>
                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab1/prefix .png" alt="..." /></span>
                                 
                                 <div style="margin-top: 20px;">
-                                    <p>Install the appropriate Python packages:
-                                        <br><span class="text-primary">pip install numpy pyyaml colorama nest_asyncio bleak jupyterlab</span>
-                                    </p>
+                                    <p>Install ArduinoBLE from the library manager (Tools -> Manage Libraries…) in the Arduino IDE.</p>
+                                    <p>Open and run ble_arduino.ino into the Artemis board from the directory ble_arduino in the codebase.</p>
+                                    <p>The Artemis board should now print its MAC address.<br> My MAC adress: C0:83:0C:69:AC:3C </p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab1/mac adress.png" alt="..." /></span>
                                 </div>
 
                                 <div style="margin-top: 10px;">
