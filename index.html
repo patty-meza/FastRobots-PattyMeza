@@ -186,35 +186,39 @@
                             <h3 class="mb-0">Set up</h3>
                             <div class="subheading mb-3">How to log back into virtual machine</div>
                             
-                            <div style="margin-top: 10px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
                                     <br><span class="text-primary">cd /Users/patty/Documents/fastrobots</span>
                                     <br><span class="text-primary">source FastRobots_ble/bin/activate</span>
                                     <br><span class="text-primary">Jupyter lab</span>
                                 </p>
                             </div>
 
-                            <div style="margin-top: 10px;">
-                                <p> I made a copy of the ble_arduino.ino file, and did the rest of the lab tasks there.
-                                    <br>I added added MAC address to here! 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab1/mac adress.png" alt="..." /></span>
-                                </p>
+                            <div class="subheading mb-3">Configurations</div>
+                            <div style="margin-top: 20px;">
+                                <p> I made a copy of the ble_arduino.ino file, and the demo.ipynb file and did the rest of the lab tasks there.</p>
+                                <p> I added added MAC address here in the connection.yaml file from the project directory</p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
                             </div>
 
-                            <div style="margin-top: 10px;">
-                                <p> What is a UUID? It stands for Universally Unique Identifiers and they help differentiate the different kinds of data that we are sending.
+                            <div style="margin-top: 20px;">
+                                <p> What is a UUID? It stands for Universally Unique Identifiers and they help differentiate the 
+                                    different kinds of data that we are sending.
                                     Run these two lines in a code block in Jupyter Notebook to generate a new UUID.
                                     <br><span class="text-primary">from uuid import uuid4</span>
                                     <br><span class="text-primary">uuid4()</span>
                                 </p>
                             </div>
                             
-                            <div style="margin-top: 10px;">
-                                <p> With a new generated UUID, copy and paste it into these two locations. In the arduino code and in the file sndsjka.yaml.
+                            <div style="margin-top: 20px;">
+                                <p> With a newly generated UUID, copy and paste it into these two locations. In the connection.yaml file and in the
+                                    ble_arduino.ino file. Make sure the UUIDs used in the Arduino sketch always match those used by Python in the configuration 
+                                    file (connection.yaml).
                                     <!------- IMAGES side by side HERE --------->
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/task1n2.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/task3.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/uuid1.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/uuid2.png" alt="Image 2" /></div>
                                 </div>
                                 </p>
                             </div>
