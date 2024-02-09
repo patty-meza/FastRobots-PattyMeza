@@ -241,21 +241,25 @@
                                 <p> 1. Send an ECHO command with a string value from the computer to the Artemis board, 
                                     and receive an augmented string on the computer.</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 80px; width: auto;" src="images/lab2/task1.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 80px; width: auto;" src="images/lab2/echo.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 90px; width: auto;" src="images/lab2/task1.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/echo.png" alt="Image 2" /></div>
                                 </div>
-                                <span style="margin-top: 10px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                In the callback function, extract the time from the string.</span>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> In my Python script, I am using the send_command() function which
+                                    sends a string data to the GATT characteristic (TX_CMD_STRING). Then there is a case called "ECHO" in my Arduino script that received the message
+                                    and manipulates the string. I have it print to the Arduino serial (for testing purposes) and then I have it send the edited string back with the writeValue() function. 
+                                    since I have a receive_string() function, it reads the most recent string message and prints it out to the Python script. </p>
                             </div>
 
                             <div style="margin-top: 50px;">
                                 <p> 2. Add a command GET_TIME_MILLIS which makes the robot reply write a string such as “T:123456” to the string characteristic.</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/task2.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 75px; width: auto;" src="images/lab2/get time millis.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 80px; width: auto;" src="images/lab2/task2.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 120px; width: auto;" src="images/lab2/get time millis.png" alt="Image 2" /></div>
                                 </div>
-                                <p style="margin-top: 10px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</p>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> This command is similar to the case before, except I sent the Arduino an empty message since it just 
+                                    wanted to trigger code in the GET_TIME_MILLIS case in Arduino. Once that case was called, it used the millis() function to generate a time in milliseconds. It is important to clear the string,
+                                    then append the parts I need every time becuase I was sending multiple different messages between the two. Again, I have a receive_string() function in my python that reads the string and 
+                                    prints it out.</p>
                             </div>
 
                             <div style="margin-top: 50px;">
