@@ -291,7 +291,7 @@
                                     Then add a command SEND_TIME_DATA which loops the array and sends each data point as a string to your laptop to be processed. (You can store these values in a list in python to determine if all 
                                     the data was sent over.)</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 300px; width: auto;" src="images/lab2/task5.png" alt="Image 1" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 220px; width: auto;" src="images/lab2/task5.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab2/send time data.png" alt="Image 2" /></div>
                                 </div>
                                 <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> For this problem I made two separate cases to send commands to in the Arduino script. The first one FILL_TIME_ARRAY is to only 
@@ -305,8 +305,8 @@
                                     that loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler should parse these strings and 
                                     and populate the data into two lists.</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2/task6.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2/sendtemp.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 300px; width: auto;" src="images/lab2/task6.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab2/sendtemp.png" alt="Image 2" /></div>
                                 </div>
                                 <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> This one took a bit more problem solving so I made a separate notification handler for these types of messages. In the Python, I sent two separate commands to fill the arrays with data and 
                                     then to send it all at once because we proved earlier this was the faster way of sending data. FILL_TEMP_ARRAY filled both an array with temperatures and timestamps that coorespond to each. Then GET_TEMP_READINGS creates a string with an upper case T: for temperature and 
