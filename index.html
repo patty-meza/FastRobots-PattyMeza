@@ -237,12 +237,12 @@
                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/blut.png" alt="..." /></span>
                             </div>
                             
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 1. Send an ECHO command with a string value from the computer to the Artemis board, 
                                     and receive an augmented string on the computer.</p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 90px; width: auto;" src="images/lab2/task1.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/echo.png" alt="Image 2" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/echo.png" alt="Image 2" /></div>
                                 </div>
                                 <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> In my Python script, I am using the send_command() function which
                                     sends a string data to the GATT characteristic (TX_CMD_STRING). Then there is a case called "ECHO" in my Arduino script that received the message
@@ -250,11 +250,11 @@
                                     since I have a receive_string() function, it reads the most recent string message and prints it out to the Python script. </p>
                             </div>
 
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 2. Add a command GET_TIME_MILLIS which makes the robot reply write a string such as “T:123456” to the string characteristic.</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 80px; width: auto;" src="images/lab2/task2.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 120px; width: auto;" src="images/lab2/get time millis.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 90px; width: auto;" src="images/lab2/task2.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/get time millis.png" alt="Image 2" /></div>
                                 </div>
                                 <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> This command is similar to the case before, except I sent the Arduino an empty message since it just 
                                     wanted to trigger code in the GET_TIME_MILLIS case in Arduino. Once that case was called, it used the millis() function to generate a time in milliseconds. It is important to clear the string,
@@ -262,15 +262,15 @@
                                     prints it out.</p>
                             </div>
 
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 3. Set up a notification handler in Python to receive the string value from the Artemis board. 
                                     In the callback function, extract the time from the string.</p>
                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/task3.png" alt="..." /></span>
-                                <p style="margin-top: 10px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</p>
-                            </div>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> In my notification handler I look for the "t" character in the string. Then I have an if statement basically so it 
+                                    only continues if it can find that t. Then it manipulates the string to only have the time as a float, then I store it in an array called time_msg. The start_notify funciton activated the notification hanlder.
+                                    so it is constantly running and will automatically read the messages sent from the Arduino of the proper type. 
                             
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 4. Write a loop that gets the current time in milliseconds and sends it to your laptop to be received and processed 
                                     by the notification handler. Collect these values for a few seconds and use the time stamps to determine how fast messages 
                                     can be sent. What is the effective data transfer rate of this method?</p>
@@ -279,45 +279,54 @@
                                     <div style="margin-right: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/task4.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/timetest.png" alt="Image 2" /></div>
                                 </div>
-                                <span style="margin-top: 20px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</span>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> In python I sent the command TIME_TEST, wich corresponds to the case in the ardino code. this is a loop that runs a set number of times
+                                    (in this case 1000) and it reads the current time in milliseconds and sends it as a string. now that my notification handler is running, it knows how to edit this string, every time this
+                                    loop runs. I have a second block of code that is to find the data transfer rate. Once the loop is finished running, it uses the first and last time values to find the total rate of message transfer. 
+                                    in this case, the time was 133.6005 messages sent per second.  </p>
                             </div>
 
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 5. Now create an array that can store time stamps. This array should be defined globally so that other functions can access it if need be. 
-                                    In the loop, rather than send each time stamp, place each time stamp into the array. (Note: you’ll need some extra logic to determine when your array is full so you don’t “over fill” the array.)
+                                    In the loop, rather than send each time stamp, place each time stamp into the array.
                                     Then add a command SEND_TIME_DATA which loops the array and sends each data point as a string to your laptop to be processed. (You can store these values in a list in python to determine if all 
                                     the data was sent over.)</p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/task5.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/send time data.png" alt="Image 2" /></div>
                                 </div>
-                                <span style="margin-top: 20px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</span>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> For this problem I made two separate cases to send commands to in the Arduino script. The first one FILL_TIME_ARRAY is to only 
+                                    fill up an array with the times. The second case SEND_TIME_DATA, loops over the array and sends it all at once. I made another code block to test how many messages were sent per second and 
+                                    with this method, 403.88 messages were sent per second. </p>
                             </div>
 
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 6. Add a second array that is the same size as the time stamp array. Use this array to store temperature readings. Each element in both 
                                     arrays should correspond, e.e., the first time stamp was recorded at the same time as the first temperature reading. Then add a command GET_TEMP_READINGS 
                                     that loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler should parse these strings and 
-                                    add populate the data into two lists.</p>
+                                    and populate the data into two lists.</p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/task6.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab2/sendtemp.png" alt="Image 2" /></div>
                                 </div>
-                                <span style="margin-top: 20px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</span>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> This one took a bit more problem solving so I made a separate notification handler for these types of messages. In the Python, I sent two separate commands to fill the arrays with data and 
+                                    then to send it all at once because we proved earlier this was the faster way of sending data. FILL_TEMP_ARRAY filled both an array with temperatures and timestamps that coorespond to each. Then GET_TEMP_READINGS creates a string with an upper case T: for temperature and 
+                                    a lower case t: for time from the timestamp array. Once all the data is appended to a string it is sent. this loops over the whole array of collected temperatures. In the notification handler, I look for the time and the temperature and extract them from the string.
+                                    Last, I printed them all out in nice columns. </p>
                             </div>
 
-                            <div style="margin-top: 50px;">
+                            <div style="margin-top: 70px;">
                                 <p> 7. Discuss the differences between these two methods, the advantages and disadvantages of both and the potential scenarios 
                                     that you might choose one method over the other. How “quickly” can the second method record data? The Artemis board has 384 kB of RAM. Approximately how much data can you store to send without running out of memory?</p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/meth1.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2/meth2.png" alt="Image 2" /></div>
                                 </div>
-                                <span style="margin-top: 10px;" style="margin-right: 40px;" class="text-dark"> In my notification handeler... Set up a notification handler in Python to receive the string value from the Artemis board. 
-                                    In the callback function, extract the time from the string.</span>
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> I calculated the time to send messages for both scenarios previosly in my script. The first method sent approximately 133 messages per second and 
+                                    the second method was able to send approximately 404 messages per second. Then using our knowledge of the RAM capacity of the Artemis, I calculated that with method 1 I can send messages for over 5 minutes before I run out of storage
+                                    and with the second method I can send messages for 1.8 minutes before I run out of storage. The advantages of the first method is that we can send real-time transmission of data, as time stamps are sent immediately after being generated.
+                                    Disadvantages could be the slower rate of data transfer and higher potential for data loss or delays if the communication channel experiences congestion or interference. The second method, other than the speed, has the advantage of providing more flexibility in handling and processing data 
+                                    on both the sender and receiver sides. A disadvantage could be having to wait till the array is filled to send the data, and having to make sure the array is not over-filled. 
+                                    In the callback function, extract the time from the string. </p>
                             </div>
 
                             
