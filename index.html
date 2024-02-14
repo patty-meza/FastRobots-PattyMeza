@@ -376,20 +376,20 @@
                             <h3 class="mb-0">Set up the IMU</h3>
                             
                             <div style="margin-top: 20px;">
-                                <p> In the Arduino library manager, install the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library</p>
-                                <p> Connect the IMU to the artemis</p>
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.png" alt="..." /></span>
+                                <p> 1. In the Arduino library manager, install the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library</p>
+                                <p> 2. Connect the IMU to the artemis</p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.jpg" alt="..." /></span>
                             </div>
                             <div style="margin-top: 20px;">
-                                <p> Run the “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
-                                <p> Look for the variable AD0_VAL, set it to zero. 
+                                <p> 3. Run the file “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
+                                <p> 4. Look for the variable <span class="text-dark">AD0_VAL</span>, set it to zero. 
                                     <br> This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed.</p>
                             </div>
                             <div style="margin-top: 20px;">
                                 <p> I tested the accelerometer data with the serial plotter, you can see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy.</p>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
-                            <div style="margin-top: 20px;">
+                            <div style="margin-top: 20px;" style="margin-bottom: 50px;">
                                 <p> I added a blinking light during startup as a visual indication that the board is running.</p>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
