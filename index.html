@@ -300,7 +300,7 @@
                                     <div style="margin-right: 8px;"><img style="height: 220px; width: auto;" src="images/lab2/task5.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab2/send time data.png" alt="Image 2" /></div>
                                 </div>
-                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> For this problem I made two separate cases to send commands to in the Arduino script. The first one FILL_TIME_ARRAY is to only 
+                                <p style="margin-top: 10px;" style="padding-right: 10px;" class="text-dark"> For this problem I made two        separate cases to send commands to in the Arduino script. The first one FILL_TIME_ARRAY is to only 
                                     fill up an array with the times. The second case SEND_TIME_DATA, loops over the array and sends it all at once. I made another code block to test how many messages were sent per second and 
                                     with this method, 403.88 messages were sent per second. </p>
                             </div>
@@ -380,15 +380,17 @@
                                 <p> 2. Connect the IMU to the artemis</p>
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.jpg" alt="..." /></span>
                             </div>
+
                             <div style="margin-top: 20px;">
                                 <p> 3. Run the file “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
                                 <p> 4. Look for the variable <span class="text-dark">AD0_VAL</span>, set it to zero. 
-                                    <br> (This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed)</p>
+                                <br> (This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed)</p>
                             </div>
+
                             <div style="margin-top: 20px;">
-                                <p> I added a blinking light during startup as a visual indication that the board is running. Then I tested the accelerometer data with the serial plotter, you can 
-                                    see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy. </p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/vMpoU66qJ04?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> I added a blinking light during startup as a visual indication that the board is running. Then I tested the accelerometer data with the serial plotter, 
+                                you can see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy. </p>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/vMpoU66qJ04?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
                             
                             <!---------------------------ACCELEROMETER------------------------------->
@@ -401,29 +403,29 @@
                                     <div style="margin-left: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/rolleqn.png" alt="Image 2" /></div>
                                 </div>
                             </div>
+
                             <div style="margin-top: 20px;">
-                                <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial 
-                                    monitor of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. 
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                </p>
+                                <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial monitor 
+                                of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. </p>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
 
                             <div style="margin-top: 30px;" class="subheading mb-3">Analyzing The Frequency Spectrum</div>
                             <div style="margin-top: 5px;">
-                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent.
-                                    I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. Below is how I calculated the Fourier
-                                    transform. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier calc.png" alt="..." /></span>
+                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent
+                                    .I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. 
+                                    Below is how I calculated the Fourier transform. 
                                 </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier calc.png" alt="..." /></span>
                             </div>
+
                             <div style="margin-top: 20px;">
-                                <p> Below are my Fourier spectrum graphs for both pitch and roll when the IMU is flat on the table. The left is the raw data measurement and the
-                                    right is the FFT. </p>
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier.png" alt="..." /></span>
+                                <p> Below are my Fourier spectrum graphs for both pitch and roll when the IMU is flat on the table. The left is the raw data measurement and the right is the FFT. </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/still fourier.png" alt="..." /></span>
                                 <p> I then tried adding a vibration by hitting the table. You can see in the amplitude graph where I hit the table, but the FFT graph still looks similar with larger magnitudes.</p>
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier.png" alt="..." /></span>
-                                <p> None of the frequencies stood out to me in the vibration test but the parts of the spectrum with the highest spokes occur at around 10 Hz and 35 Hz, I could not determine an obvious cutoff frequency 
-                                    but I kept playing around with it and decided to start with a cutoff frequency of 10 Hz.</p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/hitfourier.png" alt="..." /></span>
+                                <p> None of the frequencies stood out to me in the vibration test but the parts of the spectrum with the highest spikes occur at around 10 Hz and 35 Hz, I could not determine an 
+                                obvious cutoff frequency but I kept playing around with it and decided to start with a cutoff frequency of 10 Hz.</p>
                             </div>
 
                             <div class="subheading mb-3">Applying Low Pass Filter</div>
@@ -435,18 +437,18 @@
                                     <div style="margin-left: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/alphaeqn.png" alt="Image 2" /></div>
                                 </div>
                                 
-                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. </p>
-                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/lpfeqn.png" alt="..." /></span>
+                                <p style="margin-top: 20px;"> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. </p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab2.0/lpfeqn.png" alt="..." /></span>
 
-                                <p> Here is what my LPF looks like in the Arduino code.</p>
-                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/lpf code.png" alt="..." /></span>
+                                <p style="margin-top: 20px;"> Here is what my LPF looks like in the Arduino code.
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/lpf code.png" alt="..." /></span></p>
 
-                                <p> This is a graph of the raw data and filtered data taken at the same time. This one is with the 10 Hz cutoff frequency. As you can see it is better but there is still 
-                                a significant amount of noise. </p>
-                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/filteredlpf.png" alt="..." /></span>
+                                <p style="margin-top: 10px;"> This is a graph of the raw data and filtered data taken at the same time. This one is with the 10 Hz cutoff frequency. As you can see it is better but there is still 
+                                a significant amount of noise. 
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/f=10.png" alt="..." /></span></p>
                                 
-                                <p> I tried filtering again but with a lower cutoff frequency of 4 Hz. This was significantly better at minimizing the noise. </p>
-                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/hit.png" alt="..." /></span>
+                                <p> I tried filtering again but with a lower cutoff frequency of 4 Hz and I hit the table at the begining. This was significantly better at minimizing the noise. 
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/f=4.png" alt="..." /></span></p>
                                 
                                 <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but 
                                     I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.</p>
