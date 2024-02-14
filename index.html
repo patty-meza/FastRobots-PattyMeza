@@ -54,7 +54,10 @@
             <hr class="m-0" />
             
             
-<!------------------------- LAB 1 ------------------------------>
+<!--------------------------------- LAB 1 ----------------------------------->
+<!--------------------------------- LAB 1 ----------------------------------->
+<!--------------------------------- LAB 1 ----------------------------------->
+            
             <section class="resume-section" id="lab1">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Lab 1</h2>
@@ -161,8 +164,11 @@
                 </div>
             </section>
             <hr class="m-0" />
-            
+        
+<!------------------------------------- LAB 1.2 -------------------------------------->            
 <!------------------------------------- LAB 1.2 -------------------------------------->
+<!------------------------------------- LAB 1.2 -------------------------------------->
+        
             <section class="resume-section" id="lab1.2">
                 <div class="resume-section-content">
                     <h2 class="mb-5">LAB 1.2</h2>
@@ -338,49 +344,132 @@
             </section>
             <hr class="m-0" />
             
-            
-<!------------------------- LAB 3 ------------------------------>
-            <section class="resume-section" id="skills">
+<!-------------------------------------- LAB 2 ---------------------------------------------->           
+<!-------------------------------------- LAB 2 ---------------------------------------------->
+<!-------------------------------------- LAB 2 ---------------------------------------------->
+        
+            <section class="resume-section" id="lab2">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                    </ul>
-                    <div class="subheading mb-3">Workflow</div>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Agile Development & Scrum
-                        </li>
-                    </ul>
+                    <h2 class="mb-5">Lab 2</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p>The objective of this lab is to continue from lab 1 and test the Bluetooth connection between 
+                                the board and our laptops. We practiced sending timestamped messages from the Artemis board, and 
+                                how to use notification handlers in Jupyter Notebook to receive and handle these messages.</p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB C-to-C or A-to-C cable</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">Janurary 29th</span></div>
+
+                        <div class="flex-grow-1">
+                            <!---------------------------Set up the IMU ------------------------------->
+                            <h3 class="mb-0">Set up</h3>
+                            <div class="subheading mb-3">How to log back into virtual machine</div>
+                            
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <br><span class="text-primary">cd /Users/patty/Documents/fastrobots</span>
+                                    <br><span class="text-primary">source FastRobots_ble/bin/activate</span>
+                                    <br><span class="text-primary">Jupyter lab</span>
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I made a copy of the ble_arduino.ino file, and the demo.ipynb file and did the rest of the lab tasks there.</p>
+                                <p> I added added MAC address here in the connection.yaml file from the project directory.</p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                            </div>
+                            
+                            <!---------------------------ACCELEROMETER------------------------------->
+                            <h3 class="mb-0">Accelerometer</h3>
+                            <div class="subheading mb-3">Convert Accelerometer Data into Pitch and Roll</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            
+                            <div class="subheading mb-3">Analyzing The Frequency Spectrum</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            
+                            <div class="subheading mb-3">Applying Low Pass Filter</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            <!---------------------------GYROSCOPE------------------------------->
+                            <h3 class="mb-0">Gyroscope</h3>
+                            <div class="subheading mb-3">Compute Pitch, Roll, and Yaw Angles</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+
+                            <!---------------------------Complementary Filter------------------------------->
+                            <h3 class="mb-0">Complementary Filter</h3>
+                            <div class="subheading mb-3">Combining Gyroscope data and Accelerometer Data</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+
+                            <!---------------------------Sample Data------------------------------->
+                            <h3 class="mb-0">Sample Data</h3>
+                            <div class="subheading mb-3">Sample Data</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            <!---------------------------STUNT------------------------------->
+                            <h3 class="mb-0">Stunt Car!</h3>
+                            <div class="subheading mb-3">Using Built-in Controller</div>
+                            <div style="margin-top: 20px;">
+                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
+                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                            </div>
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
                 </div>
             </section>
+        
             <hr class="m-0" />
-            <!-- Interests-->
+<!----------------------------------- Lab 3 ------------------------------------->
+<!----------------------------------- Lab 3 ------------------------------------->
+<!----------------------------------- Lab 3 ------------------------------------->
+        
             <section class="resume-section" id="interests">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Interests</h2>
