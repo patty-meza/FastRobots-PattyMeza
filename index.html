@@ -417,29 +417,39 @@
                                 </p>
                             </div>
                             <div style="margin-top: 20px;">
-                                <p> Below are my Fourier spectrum graphs for both pitch and roll. The left is the raw data measurement and the right is the FFT. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier.png" alt="..." /></span>
-                                </p>
-                                <p> There are many parts on the spectrum with spikes, I could not determine the strong frequencies to filter
-                                    but I kept playing around with it and decided to start low with a frequency of 5 Hz to filter out. </p>
+                                <p> Below are my Fourier spectrum graphs for both pitch and roll when the IMU is flat on the table. The left is the raw data measurement and the
+                                    right is the FFT. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier.png" alt="..." /></span>
+                                <p> I then tried adding a vibration by hitting the table. You can see in the amplitude graph where I hit the table, but the FFT graph still looks similar with larger magnitudes.</p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier.png" alt="..." /></span>
+                                <p> None of the frequencies stood out to me in the vibration test but the parts of the spectrum with the highest spokes occur at around 10 Hz and 35 Hz, I could not determine an obvious cutoff frequency 
+                                    but I kept playing around with it and decided to start with a cutoff frequency of 10 Hz.</p>
                             </div>
 
-                            
                             <div class="subheading mb-3">Applying Low Pass Filter</div>
+                            
                             <div style="margin-top: 20px;">
-                                <p> As I said earlier, I decided to go with a cutoff frequency of 5Hz for both roll and pitch data. Then, to calculate my alpha value I used these formulas starting with the 
-                                    cutoff frequency (fc), and period (T) which is 1/sampling rate.</p>
+                                <p> For the low-pass filter, to calculate my alpha value I used these formulas starting with the cutoff frequency (fc), and period (T) which is 1/sampling rate.</p>
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/fceqn.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/alphaeqn.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/fceqn.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/alphaeqn.png" alt="Image 2" /></div>
                                 </div>
                                 
-                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/lpfeqn.png" alt="..." /></span>
-                                </p>
-                                <p> Below is is comparison to the filtered vs not filtered data. I think my low pass filter overall worked great. The values it outputs for the angles are consistent. 
-                                    There is still a good amount of noise but I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.
-                                </p>
+                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. </p>
+                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/lpfeqn.png" alt="..." /></span>
+
+                                <p> Here is what my LPF looks like in the Arduino code.</p>
+                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/lpf code.png" alt="..." /></span>
+
+                                <p> This is a graph of the raw data and filtered data taken at the same time. This one is with the 10 Hz cutoff frequency. As you can see it is better but there is still 
+                                a significant amount of noise. </p>
+                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/filteredlpf.png" alt="..." /></span>
+                                
+                                <p> I tried filtering again but with a lower cutoff frequency of 4 Hz. This was significantly better at minimizing the noise. </p>
+                                <span class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab2.0/hit.png" alt="..." /></span>
+                                
+                                <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but 
+                                    I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.</p>
                             </div>
 
                             <!---------------------------GYROSCOPE------------------------------->
