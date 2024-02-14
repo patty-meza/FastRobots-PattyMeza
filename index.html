@@ -358,62 +358,86 @@
                             <!---------------------------INTRO------------------------------->
                             <h3 class="mb-0">Introduction</h3>
                             <div class="subheading mb-3">Lab Objectives</div>
-                            <p>The objective of this lab is to continue from lab 1 and test the Bluetooth connection between 
-                                the board and our laptops. We practiced sending timestamped messages from the Artemis board, and 
-                                how to use notification handlers in Jupyter Notebook to receive and handle these messages.</p>
+                            <p>The objective of this lab is to add the IMU to the robot and to learn how to use readings from the accelerometer
+                            and gyroscope. I learned how to filter data to get the most accurate reading. We also got to test out our stunt cars!</p>
                             <div class="subheading mb-3">Components</div>
                             <p>1 x SparkFun RedBoard Artemis Nano</p>
                             <p>1 x USB C-to-C or A-to-C cable</p>
+                            <p>1 x 9DOF IMU sensor</p>
+                            <p>1 x Force1 RC car</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">Janurary 29th</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary">Februrary 7th</span></div>
                     </div>
                         
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <!---------------------------Set up the IMU ------------------------------->
-                            <h3 class="mb-0">Set up</h3>
-                            <div class="subheading mb-3">How to log back into virtual machine</div>
+                            <h3 class="mb-0">Set up the IMU</h3>
                             
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
-                                    <br><span class="text-primary">cd /Users/patty/Documents/fastrobots</span>
-                                    <br><span class="text-primary">source FastRobots_ble/bin/activate</span>
-                                    <br><span class="text-primary">Jupyter lab</span>
-                                </p>
+                                <p> In the Arduino library manager, install the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library</p>
+                                <p> Connect the IMU to the artemis</p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.png" alt="..." /></span>
                             </div>
-
                             <div style="margin-top: 20px;">
-                                <p> I made a copy of the ble_arduino.ino file, and the demo.ipynb file and did the rest of the lab tasks there.</p>
-                                <p> I added added MAC address here in the connection.yaml file from the project directory.</p>
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                <p> Run the “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
+                                <p> Look for the variable AD0_VAL, set it to zero. 
+                                    <br> This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed.</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> I tested the accelerometer data with the serial plotter, you can see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> I added a blinking light during startup as a visual indication that the board is running.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
                             
                             <!---------------------------ACCELEROMETER------------------------------->
                             <h3 class="mb-0">Accelerometer</h3>
                             <div class="subheading mb-3">Convert Accelerometer Data into Pitch and Roll</div>
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                <p> These are the equations I used to convert the raw accelerometer data into Euler angles (pitch and roll).
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
                                 </p>
                             </div>
+                            <div style="margin-top: 20px;">
+                                <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial 
+                                    monitor of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. 
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                </p>
+                            </div>
 
-                            
                             <div class="subheading mb-3">Analyzing The Frequency Spectrum</div>
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent.
+                                    I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. Below is how I calculated the Fourier
+                                    transform. 
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
                                 </p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> Below are my Fourier spectrum graphs for both pitch and roll. The left is the raw data measurement and the right is the FFT. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                                <p> There are many parts on the spectrum with spikes, I could not determine the strong frequencies to filter
+                                    but I kept playing around with it and decided to start low with a frequency of 5 Hz to filter out. </p>
                             </div>
 
                             
                             <div class="subheading mb-3">Applying Low Pass Filter</div>
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
+                                <p> As I said earlier, I decided to go with a cutoff frequency of 5Hz for both roll and pitch data. Then, to calculate my alpha value I used these formulas starting with the 
+                                    cutoff frequency (fc), and period (T) which is 1/sampling rate.
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. Below is is comparison to the
+                                    filtered vs not filtered data.
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                </p>
+                                <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but I cannot
+                                    keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.
                                 </p>
                             </div>
 
