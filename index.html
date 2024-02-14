@@ -385,24 +385,26 @@
                                 <p> 4. Look for the variable <span class="text-dark">AD0_VAL</span>, set it to zero. 
                                     <br> (This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed)</p>
                             </div>
-                            <div style="margin-top: 20px;" style="margin-bottom: 50px;">
+                            <div style="margin-top: 20px;">
                                 <p> I added a blinking light during startup as a visual indication that the board is running. Then I tested the accelerometer data with the serial plotter, you can 
                                     see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy. </p>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/vMpoU66qJ04?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
                             
                             <!---------------------------ACCELEROMETER------------------------------->
-                            <h3 class="mb-0">Accelerometer</h3>
+                            <h3 style="margin-top: 50px;" class="mb-0">Accelerometer</h3>
                             <div class="subheading mb-3">Convert Accelerometer Data into Pitch and Roll</div>
                             <div style="margin-top: 20px;">
-                                <p> These are the equations I used to convert the raw accelerometer data into Euler angles (pitch and roll).
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
-                                </p>
+                                <p> These are the equations I used to convert the raw accelerometer data into Euler angles (pitch and roll).</p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/pitcheqn.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/rolleqn.png" alt="Image 2" /></div>
+                                </div>
                             </div>
                             <div style="margin-top: 20px;">
                                 <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial 
                                     monitor of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. 
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3NaEEql777o?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                                 </p>
                             </div>
 
@@ -411,7 +413,7 @@
                                 <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent.
                                     I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. Below is how I calculated the Fourier
                                     transform. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier calc.png" alt="..." /></span>
                                 </p>
                             </div>
                             <div style="margin-top: 20px;">
@@ -426,15 +428,17 @@
                             <div class="subheading mb-3">Applying Low Pass Filter</div>
                             <div style="margin-top: 20px;">
                                 <p> As I said earlier, I decided to go with a cutoff frequency of 5Hz for both roll and pitch data. Then, to calculate my alpha value I used these formulas starting with the 
-                                    cutoff frequency (fc), and period (T) which is 1/sampling rate.
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                    cutoff frequency (fc), and period (T) which is 1/sampling rate.</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/fceqn.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 100px; width: auto;" src="images/lab2.0/alphaeqn.png" alt="Image 2" /></div>
+                                </div>
+                                
+                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/lpfeqn.png" alt="..." /></span>
                                 </p>
-                                <p> After yielding an alpha value of ~ 0.12, I used this formula for both pitch and roll to filter my raw accelerometer data. Below is is comparison to the
-                                    filtered vs not filtered data.
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
-                                </p>
-                                <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but I cannot
-                                    keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.
+                                <p> Below is is comparison to the filtered vs not filtered data. I think my low pass filter overall worked great. The values it outputs for the angles are consistent. 
+                                    There is still a good amount of noise but I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.
                                 </p>
                             </div>
 
