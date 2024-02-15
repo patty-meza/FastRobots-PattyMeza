@@ -445,10 +445,10 @@
 
                                 <p style="margin-top: 10px;"> This is a graph of the raw data and filtered data taken at the same time. This one is with the 10 Hz cutoff frequency. As you can see it is better but there is still 
                                 a significant amount of noise. 
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/f=10.png" alt="..." /></span></p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/f=10.png" alt="..." /></span></p>
                                 
                                 <p> I tried filtering again but with a lower cutoff frequency of 4 Hz and I hit the table at the begining. This was significantly better at minimizing the noise. 
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/f=4.png" alt="..." /></span></p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/f=4.png" alt="..." /></span></p>
                                 
                                 <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but 
                                     I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.</p>
@@ -479,10 +479,29 @@
                             <h3 class="mb-0">Complementary Filter</h3>
                             <div class="subheading mb-3">Combining Gyroscope data and Accelerometer Data</div>
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                <p> A complimentray filter can be uaed to combine the two types of data, gyroscope and accelerometer. It uses the most useufl parts from both and creates the most 
+                                    accurate filter that is not susceptible to drift or quick vibrations. I tried various alpha values in order to determine wich filter to putthe most weight on.  
+                                    The following is the equation for the complimentary filter. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compfilter.png" alt="..." /></span>
                                 </p>
+                                <p> To implement it on the artemis, I took the accelerometer low pass filter and gyroscope readings all together and passed it though my complimentary filter. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compcode.png" alt="..." /></span>
+                                </p>
+                                <p> I decided to go with an alpha of 0.1. After many tries it seemed to be the best combination of the two. As you can see in the image below. The complimentary filter did a good job
+                                    of combineing the two filters. In these images I am just rolling it from -90 to zero to 90 and back to zero. In the roll graph, all the filters are fairly accurate so you dont see the 
+                                    benefits of the complimentary filter as much, but in the pitch graph (I was trying to keep it constant) you can see how the complimentary filter kept the noise low and did not drift. 
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comppitch.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+                                <p> In this measurement of data I added vibrations and the filter did a good job. You can see especially see in the pitch graph where the complimentary filter
+                                    is not susceptible to the gyroscope drifting and is much less noisy then just the LPF filter.
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/viberoll.png" alt="Image 1" /></div>
+                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/vibepitch.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+
                             </div>
 
 
