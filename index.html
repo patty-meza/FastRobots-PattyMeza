@@ -458,9 +458,19 @@
                             <h3 class="mb-0">Gyroscope</h3>
                             <div class="subheading mb-3">Compute Pitch, Roll, and Yaw Angles</div>
                             <div style="margin-top: 20px;">
-                                <p> Open the terminal and type these 3 commands one at a time. This navigates to the correct directory, 
-                                    opens the virtual machine, and starts the Jupyter Notebook tab on my browser.
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2/adressloc.png" alt="..." /></span>
+                                <p> To convert the raw gyroscope data to Roll, Pitch, and Yaw angles, I multiplied the angle by a time increment dt and added it to the current angle.
+                                    Here is the code in my arduino. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/gyrocode.png" alt="..." /></span>
+                                </p>
+
+                                <p> This is a graph of gyroscope roll, pitch, and yaw vs time. I rotated the IMU back and forth as you can see from the occilations. The issue with the gyroscope is that it constantly "drifts". 
+                                    As you can see the angels apear to be driting and increasing slowly even if i was retunring teh gyrosope to the same place each time. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/drifting gyro.png" alt="..." /></span>
+                                </p>
+                                <p> The main differnce between the gyroscope data and the accelerometer data is that the gyrosope drifts from the start. Becuase the gyrposcope only measures relative angles, I need to always 
+                                    initiallize the first position as zero. And lastly, the gyroscope has much less noise than the accleerometer data which is a big benifit. I tried playing around with the sampling rate 
+                                    by adding in delays, I found that the longer the delay (lower sampling rate), the more the gyroscope values drift. Below is the data with keeping it still (my leg was tapping under the desk).
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/driftmore.png" alt="..." /></span>
                                 </p>
                             </div>
 
