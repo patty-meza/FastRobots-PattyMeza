@@ -566,134 +566,123 @@
                             <h3 class="mb-0">Power up!</h3>
                             <div class="subheading mb-3">Power the Artemis with a battery.</div>
                             <div style="margin-top: 20px;">
-                                <p> 1. In the Arduino library manager, install the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library</p>
-                                <p> 2. Connect the IMU to the artemis</p>
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.jpg" alt="..." /></span>
+                                <p> I cut the current connector off the lithium ion battery cutting the wires <strong>one at a time!</strong> (so you don't complete the circuit with the scisors and short the battery).
+                                 Then I solderd the battery wires to the JST jumper wires and isulated the exposed wire with heat shrink. Below is the battery after I cut it and after I soldered the new connector on. </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 200px; width: auto;" src="images/lab3/cutbattery.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 200px; width: auto;" src="images/lab3/battery.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> Next I powered the artemis with the battery alone (no usb into laptop). To make sure it worked still, I resetted the artemis and as you can see in the video 
+                                below, the blue light blinked 3 times. I had this blink sequence occur on startup in the code that I last uploaded to the artemis. </p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/cZVs6-4sXBw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> 3. Run the file “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
-                                <p> 4. Look for the variable <span class="text-dark">AD0_VAL</span>, set it to zero. 
-                                <br> (This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed)</p>
-                            </div>
-
-                            <div style="margin-top: 20px;">
-                                <p> I added a blinking light during startup as a visual indication that the board is running. Then I tested the accelerometer data with the serial plotter, 
-                                you can see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy. </p>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/vMpoU66qJ04?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> Next, I installed the SparkFun VL53L1X 4m laser distance sensor library and I connected the QWIIC break-out board to the Artemis.</p>
                             </div>
                             
                             <!---------------------------4. Connect the first ToF sensor to the QWIIC breakout board ------------------------------->
                             <h3 style="margin-top: 60px;" class="mb-0">Set up ToF sensors</h3>
                             <div class="subheading mb-3">Connect the first ToF sensor to the QWIIC breakout board.</div>
                             <div style="margin-top: 20px;">
-                                <p> These are the equations I used to convert the raw accelerometer data into Euler angles (pitch and roll).</p>
+                                <p> I used the data sheet to create a plan on how I was going to solder the QWIIC cable to the first time of flight sensor. Once I decieded what goes where, I solderd it
+                                directly on the boaard and used heat shrink on the ends. This was my first time soldering so I was nervous at first, I found the helping hands to be extemly helpful to not mess up.</p>
                                  <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/pitcheqn.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/rolleqn.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab3/diagram.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab3/sensor1.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <!--------------------------->
+                            <div style="margin-top: 30px;" class="subheading mb-3">Scan the I2C channel and test the first sensor.</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I navigated to the example arduino code: File->Examples->Apollo3->Wire and open Example1_wire_I2C. When i ran that it printed out the adress 0x29, this is as excpeted as everyone else
+                                in the class ahd thesaem adress sicne we all had identical components.</p>
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <p> Next I ran the example: \Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance. As you can see in teh video below the sensor was woking!
+                                 As I got close to my screen, the numbers apporched zero. 
+                                </p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/pTOrQeRrkeQ?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <!--------------------------------- Testing different sensor modes -------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Testing different sensor modes</h3>
+                            <div class="subheading mb-3">Pros & Cons of each mode</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I tested two modes on the sensor short and long. In the setup of the arduino script this is how I set the mode: </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/set distance mode.png" alt="..." /></span>
+                                <p style="margin-top: 20px;"> The short mode is best up to distances of 1.3m away but the default mode is long, which is most accurate at distances 1.3-4m away. Choosing wich mode to use is 
+                                dependant on the use of the robot. If you are naviagitng through tight obstacles that you might be running into a lot, the short mode is best so that you can react quickly. If you are trying to path plan
+                                in a larger winding hallway the long range might be better so you can more acurately predict the turns it will take. </p>
+                                <p> Below is an image of the test setup I did so I could test both modes at various distances. I set up a measuring tape and marked the specifc distances I wanted to test. I held the TOF sensor on a flat surface and
+                                taped it down so it would always be in the exact same place. I moved a white cardboard box to the position and ran the sensor for 100 measurements, and repeated for both modes.  </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 280px; width: auto;" src="images/lab3/setup1.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 280px; width: auto;" src="images/lab3/setup2.png" alt="Image 2" /></div>
                                 </div>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial monitor 
-                                of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. </p>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                            <!--------------------------->
-                            <div style="margin-top: 30px;" class="subheading mb-3">Scan the I2C channel to find the sensor.</div>
-
-                            <div style="margin-top: 5px;">
-                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent
-                                    .I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. 
-                                    Below is how I calculated the Fourier transform. 
-                                </p>
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier calc.png" alt="..." /></span>
+                                <p> In the python script, I received the data and saved the mean of each distance measurement in an array. I tested both modes at 5cm, 10cm, 1m, and 2m. I then graphed the results
+                                with a red dotted line showing where the actual measuremtns should be. As expected, the short mode sensor was closer to the actual values in the shorter range and the long mode was closer in the longer range.
+                                I was suprised buy the undershoot of over 100 millimenters in both modes at the longest range. I thought it would be more accuratre. I think next time I should try other colours to reflect off of. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/toftest.png" alt="..." /></span>
                             </div>
 
-                            <div style="margin-top: 20px;">
-                                <p> Below are my Fourier spectrum graphs for both pitch and roll when the IMU is flat on the table. The left is the raw data measurement and the right is the FFT. </p>
-                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/still fourier.png" alt="..." /></span>
-                                <p> I then tried adding a vibration by hitting the table. You can see in the amplitude graph where I hit the table, but the FFT graph still looks similar with larger magnitudes.</p>
-                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/hitfourier.png" alt="..." /></span>
-                                <p> None of the frequencies stood out to me in the vibration test but the parts of the spectrum with the highest spikes occur at around 10 Hz and 35 Hz, I could not determine an 
-                                obvious cutoff frequency but I kept playing around with it and decided to start with a cutoff frequency of 10 Hz.</p>
-                            </div>
-                            <!--------------------------->
-                            <div style="margin-top: 30px;" class="subheading mb-3">Test the first sensor.</div>
-
-                            <div style="margin-top: 5px;">
-                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent
-                                    .I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. 
-                                    Below is how I calculated the Fourier transform. 
-                                </p>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-
-                            <!--------------------------------- Testing different sensor modes -------------------------------->
-                            <h3 class="mb-0">Testing different sensor modes</h3>
-                            <div class="subheading mb-3">Pros & Cons of each mode</div>
-                            <div style="margin-top: 20px;">
-                                <p> To convert the raw gyroscope data to Roll, Pitch, and Yaw angles, I multiplied the angle by a time increment dt and added it to the current angle.
-                                    Here is the code in my arduino. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/gyrocode.png" alt="..." /></span>
-                                </p>
-                                <p> In this measurement of data I added vibrations and the filter did a good job. You can see especially see in the pitch graph where the complimentary filter
-                                    is not susceptible to the gyroscope drifting and is much less noisy then just the LPF filter.
-                                    <div style="display: flex; align-items: flex-start;">
-                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/viberoll.png" alt="Image 1" /></div>
-                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/vibepitch.png" alt="Image 2" /></div>
-                                    </div>
-                                </p>
-                                <p> To convert the raw gyroscope data to Roll, Pitch, and Yaw angles, I multiplied the angle by a time increment dt and added it to the current angle.
-                                    Here is the code in my arduino. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/gyrocode.png" alt="..." /></span>
-                                </p>
-
-                            </div>
                             <!--------------------------- Hookup both TOF sensors ------------------------------->
-                            <h3 class="mb-0">Setting up Both ToF Sensors</h3>
+                            <h3 style="margin-top: 50px;" class="mb-0">Setting up Both ToF Sensors</h3>
                             <div class="subheading mb-3">First method to record data with both sensors simultaniously.</div>
                             <div style="margin-top: 20px;">
-                                <p> A complimentray filter can be uaed to combine the two types of data, gyroscope and accelerometer. It uses the most useufl parts from both and creates the most 
-                                    accurate filter that is not susceptible to drift or quick vibrations. I tried various alpha values in order to determine wich filter to putthe most weight on.  
-                                    The following is the equation for the complimentary filter. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compfilter.png" alt="..." /></span>
+                                <p> Setting up two sensors required use of the xshut pin on one of the Sensors. I started out by soldering a wire to a digital pin on the artemis board and the xshut pin on one of the ToF sensors. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/sensor2.png" alt="..." /></span>
                                 </p>
-                                <p> I decided to go with an alpha of 0.1. After many tries it seemed to be the best combination of the two. As you can see in the image below. The complimentary filter did a good job
-                                    of combineing the two filters. In these images I am just rolling it from -90 to zero to 90 and back to zero. In the roll graph, all the filters are fairly accurate so you dont see the 
-                                    benefits of the complimentary filter as much, but in the pitch graph (I was trying to keep it constant) you can see how the complimentary filter kept the noise low and did not drift. 
-                                    <div style="display: flex; align-items: flex-start;">
-                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comproll.png" alt="Image 1" /></div>
-                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comppitch.png" alt="Image 2" /></div>
-                                    </div>
+                                <p> Then in my aduino code, in the setup loop I do the following operations:
+                                </p>
+                                <p>1. I shutodwn sensor 2 by setting the xshut pin to low.</p>
+                                <p>2. I begin sensor 1 and set a new I2C address for sensor 1.</p>
+                                <p>3. I bring sensor 2 out of shutdown mode (set to to high).</p>
+                                <p>4. I begin sensor 2 and set the I2C address for sensor 2 as default (0x29).
+                                </p>
+                                <p>Now they are both connected with differnt I2C adresses! </p>
+                            </div>
+                            <div style="margin-top: 30px;">
+                                <p> Now you can see in this video, as I alternate bringing the sensors close to the table they read different values. 
+                                    <iframe width="600" height="325" src="https://www.youtube.com/embed/uDRF2Db_COw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                </p>
+                                <p> To send and recieve data to my computer, I set up a case that activates an if stateemnt in my void loop. So from my python script I call that case then the void loop will continuosly check if data is ready, 
+                                    take data, store it in an array, and send it all at once. This is what that method looks like.  
+                                    <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab3/slowmethod.png" alt="..." /></span>
+                                </p>
+                                <p style="margin-top: 30px;"> This method yeilded this graph when I alternated bringing the sensors close to the table.  
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/2tofs.png" alt="..." /></span>
+                                </p>
+                                <p> Though this graph looks nice, the rate that the data is taken is very slow, this mehtod in the loop where I wait untill the data is ready to take the measurment is taking too long. The loop only runs at less than 8 messages per seond. 
+                                    <span class="d-none d-lg-block"><img style="height: 150px; width: auto;" src="images/lab3/slow sample rate.png" alt="..." /></span>
                                 </p>
                             </div>
                             <!--------------------------->
-                            <div class="subheading mb-3">Quicker method to record data.</div>
+                            <div style="margin-top: 40px;" class="subheading mb-3">Quicker method to record data.</div>
                             <div style="margin-top: 20px;">
-                                <p> A complimentray filter can be uaed to combine the two types of data, gyroscope and accelerometer. It uses the most useufl parts from both and creates the most 
-                                    accurate filter that is not susceptible to drift or quick vibrations. I tried various alpha values in order to determine wich filter to putthe most weight on.  
-                                    The following is the equation for the complimentary filter. 
-                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compfilter.png" alt="..." /></span>
-                                </p>
-                                <p> I decided to go with an alpha of 0.1. After many tries it seemed to be the best combination of the two. As you can see in the image below. The complimentary filter did a good job
-                                    of combineing the two filters. In these images I am just rolling it from -90 to zero to 90 and back to zero. In the roll graph, all the filters are fairly accurate so you dont see the 
-                                    benefits of the complimentary filter as much, but in the pitch graph (I was trying to keep it constant) you can see how the complimentary filter kept the noise low and did not drift. 
-                                    <div style="display: flex; align-items: flex-start;">
-                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comproll.png" alt="Image 1" /></div>
-                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comppitch.png" alt="Image 2" /></div>
-                                    </div>
-                                </p>
+                                <p> It is essential that the code executes quickly, therefore I cannot let it hang while it waits for the sensor to finish a measurement. This new method allowsd the loop to run, continuously with the only limiting factor 
+                                being how quickly each line excecutes and it reads and adds new ToF sensor data from both sensors only when available. Below is how I implemented, see the if statement. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/fastmethod.png" alt="..." /></span>
+                                
+                                <p> As you can see the loop runs much faster now! </p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab3/fast sampling rate.png" alt="..." /></span>
+                                
+                                <p style="margin-top: 30px;"> Now I am able to send timestamped messages and graph both sensors data more accuratly. There are spikes becuase the sensor is much slower than the loop, so all the points in betweeen the senssor being ready are zero. 
+                                I printed the data and measured the time between each spike as 0.101 seconds. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/fastgraphs.png" alt="..." /></span>
                             </div>
-                            <!------------------- Graphs -------------------->
+                            <!------------------- Final priduct -------------------->
                             <div style="margin-top: 20px;">
-                                <p> After making sure all my filters were running smoothly, I implemented a few strategies to speed up the excecution of the main loop and the sampling rate. 
-                                    I deleted all my comments, and removed all my delays. I also moved the part where I checked if the data is ready in the main loop (see below). I was able to record a sampling rate
-                                    of about 315 messages per secodn this way this is almost double what I had before.
-                                    <div style="display: flex; align-items: flex-start;">
-                                        <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab2.0/void.png" alt="Image 1" /></div>
-                                        <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2.0/sampling rate.png" alt="Image 2" /></div>
-                                    </div>
+                                <p> Finally, this is what the completely soldered component looks like!
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab3/all wired.png" alt="..." /></span>
                                 </p>
                             </div>
                             
