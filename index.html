@@ -453,7 +453,6 @@
                                 <p> I think my low pass filter overall worked great. The values it outputs for the angles are consistent. There is still a good amount of noise but 
                                     I cannot keep lowering the frequency cutoff value or else I will miss out on important signals from the sensors.</p>
                             </div>
-
                             <!---------------------------GYROSCOPE------------------------------->
                             <h3 class="mb-0">Gyroscope</h3>
                             <div class="subheading mb-3">Compute Pitch, Roll, and Yaw Angles</div>
@@ -473,8 +472,6 @@
                                     <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/driftmore.png" alt="..." /></span>
                                 </p>
                             </div>
-
-
                             <!---------------------------Complementary Filter------------------------------->
                             <h3 class="mb-0">Complementary Filter</h3>
                             <div class="subheading mb-3">Combining Gyroscope data and Accelerometer Data</div>
@@ -504,8 +501,6 @@
                                 </p>
 
                             </div>
-
-
                             <!---------------------------Sample Data------------------------------->
                             <h3 class="mb-0">Sample Data</h3>
                             <div class="subheading mb-3">Improving the way I Sample Data</div>
@@ -519,7 +514,6 @@
                                     </div>
                                 </p>
                             </div>
-
                             <!---------------------------STUNT------------------------------->
                             <h3 style="margin-top: 50px;" class="mb-0">Stunt Car!</h3>
                             <div class="subheading mb-3">Using Built-in Controller</div>
@@ -542,58 +536,173 @@
 <!----------------------------------- Lab 3 ------------------------------------->
 <!----------------------------------- Lab 3 ------------------------------------->
         
-            <section class="resume-section" id="interests">
+            <section class="resume-section" id="lab3">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Google Analytics Certified Developer
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Mobile Web Specialist - Google Certification
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            2
-                            <sup>nd</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - James Buchanan High School - Hackathon 2006
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            3
-                            <sup>rd</sup>
-                            Place - James Buchanan High School - Hackathon 2005
-                        </li>
-                    </ul>
+                    <h2 class="mb-5">Lab 3</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p>The objectice of this lab is to start soldering components, we soldered the lithium-ion battery to the appropriate connector so we can use the
+                                artemis board without needing to be pluggin in to our laptops. We also soldered the time of flight sensors to QWIIC Breakout board conenctor. 
+                                With the ToF sesors, I and learned how to read and send data with two identicle sensors. I also implemented ways to read sensor data as quick as possible. </p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>2 x Qwiic connector</p>
+                            <p>1 x Measuring tape</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">Februrary 14th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. Power up your Artemis with a battery! ------------------------------->
+                            <h3 class="mb-0">Power up!</h3>
+                            <div class="subheading mb-3">Power the Artemis with a battery.</div>
+                            <div style="margin-top: 20px;">
+                                <p> 1. In the Arduino library manager, install the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library</p>
+                                <p> 2. Connect the IMU to the artemis</p>
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/imu.jpg" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> 3. Run the file “..\Arduino\libraries\SparkFun_ICM-20948\SparkFun_ICM-20948_ArduinoLibrary-master\examples\Arduino\Example1_Basics”</p>
+                                <p> 4. Look for the variable <span class="text-dark">AD0_VAL</span>, set it to zero. 
+                                <br> (This variable represents the last bit of the i2c address of the IMU. It needs to be set to 0 or 1 depending on if the ADR jumper is closed)</p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I added a blinking light during startup as a visual indication that the board is running. Then I tested the accelerometer data with the serial plotter, 
+                                you can see as I flip the IMU in different ways how the lines fluctuate. The data is pretty noisy. </p>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/vMpoU66qJ04?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            
+                            <!---------------------------4. Connect the first ToF sensor to the QWIIC breakout board ------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Set up ToF sensors</h3>
+                            <div class="subheading mb-3">Connect the first ToF sensor to the QWIIC breakout board.</div>
+                            <div style="margin-top: 20px;">
+                                <p> These are the equations I used to convert the raw accelerometer data into Euler angles (pitch and roll).</p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/pitcheqn.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 60px; width: auto;" src="images/lab2.0/rolleqn.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here is a video of me holding the IMU steady with a pitch of -90 degrees and a roll of zero. I am printing the values in degrees to the serial monitor 
+                                of the Arduino. As you can see the accelerometer is pretty accurate so there is no need for a two-point calibration. </p>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <!--------------------------->
+                            <div style="margin-top: 30px;" class="subheading mb-3">Scan the I2C channel to find the sensor.</div>
+
+                            <div style="margin-top: 5px;">
+                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent
+                                    .I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. 
+                                    Below is how I calculated the Fourier transform. 
+                                </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/fourier calc.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Below are my Fourier spectrum graphs for both pitch and roll when the IMU is flat on the table. The left is the raw data measurement and the right is the FFT. </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/still fourier.png" alt="..." /></span>
+                                <p> I then tried adding a vibration by hitting the table. You can see in the amplitude graph where I hit the table, but the FFT graph still looks similar with larger magnitudes.</p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab2.0/hitfourier.png" alt="..." /></span>
+                                <p> None of the frequencies stood out to me in the vibration test but the parts of the spectrum with the highest spikes occur at around 10 Hz and 35 Hz, I could not determine an 
+                                obvious cutoff frequency but I kept playing around with it and decided to start with a cutoff frequency of 10 Hz.</p>
+                            </div>
+                            <!--------------------------->
+                            <div style="margin-top: 30px;" class="subheading mb-3">Test the first sensor.</div>
+
+                            <div style="margin-top: 5px;">
+                                <p> Because there is noise, it is good to analyze the data in the frequency spectrum, to see what frequencies of noise are prevalent
+                                    .I recorded accelerometer data on the Artemis and sent it over to my computer. I downloaded Scipy.fftpack package to graph the FFT. 
+                                    Below is how I calculated the Fourier transform. 
+                                </p>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/fDkZO7NKR94?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <!--------------------------------- Testing different sensor modes -------------------------------->
+                            <h3 class="mb-0">Testing different sensor modes</h3>
+                            <div class="subheading mb-3">Pros & Cons of each mode</div>
+                            <div style="margin-top: 20px;">
+                                <p> To convert the raw gyroscope data to Roll, Pitch, and Yaw angles, I multiplied the angle by a time increment dt and added it to the current angle.
+                                    Here is the code in my arduino. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/gyrocode.png" alt="..." /></span>
+                                </p>
+                                <p> In this measurement of data I added vibrations and the filter did a good job. You can see especially see in the pitch graph where the complimentary filter
+                                    is not susceptible to the gyroscope drifting and is much less noisy then just the LPF filter.
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/viberoll.png" alt="Image 1" /></div>
+                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/vibepitch.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+                                <p> To convert the raw gyroscope data to Roll, Pitch, and Yaw angles, I multiplied the angle by a time increment dt and added it to the current angle.
+                                    Here is the code in my arduino. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/gyrocode.png" alt="..." /></span>
+                                </p>
+
+                            </div>
+                            <!--------------------------- Hookup both TOF sensors ------------------------------->
+                            <h3 class="mb-0">Setting up Both ToF Sensors</h3>
+                            <div class="subheading mb-3">First method to record data with both sensors simultaniously.</div>
+                            <div style="margin-top: 20px;">
+                                <p> A complimentray filter can be uaed to combine the two types of data, gyroscope and accelerometer. It uses the most useufl parts from both and creates the most 
+                                    accurate filter that is not susceptible to drift or quick vibrations. I tried various alpha values in order to determine wich filter to putthe most weight on.  
+                                    The following is the equation for the complimentary filter. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compfilter.png" alt="..." /></span>
+                                </p>
+                                <p> I decided to go with an alpha of 0.1. After many tries it seemed to be the best combination of the two. As you can see in the image below. The complimentary filter did a good job
+                                    of combineing the two filters. In these images I am just rolling it from -90 to zero to 90 and back to zero. In the roll graph, all the filters are fairly accurate so you dont see the 
+                                    benefits of the complimentary filter as much, but in the pitch graph (I was trying to keep it constant) you can see how the complimentary filter kept the noise low and did not drift. 
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comproll.png" alt="Image 1" /></div>
+                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comppitch.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+                            </div>
+                            <!--------------------------->
+                            <div class="subheading mb-3">Quicker method to record data.</div>
+                            <div style="margin-top: 20px;">
+                                <p> A complimentray filter can be uaed to combine the two types of data, gyroscope and accelerometer. It uses the most useufl parts from both and creates the most 
+                                    accurate filter that is not susceptible to drift or quick vibrations. I tried various alpha values in order to determine wich filter to putthe most weight on.  
+                                    The following is the equation for the complimentary filter. 
+                                    <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab2.0/compfilter.png" alt="..." /></span>
+                                </p>
+                                <p> I decided to go with an alpha of 0.1. After many tries it seemed to be the best combination of the two. As you can see in the image below. The complimentary filter did a good job
+                                    of combineing the two filters. In these images I am just rolling it from -90 to zero to 90 and back to zero. In the roll graph, all the filters are fairly accurate so you dont see the 
+                                    benefits of the complimentary filter as much, but in the pitch graph (I was trying to keep it constant) you can see how the complimentary filter kept the noise low and did not drift. 
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comproll.png" alt="Image 1" /></div>
+                                        <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab2.0/comppitch.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+                            </div>
+                            <!------------------- Graphs -------------------->
+                            <div style="margin-top: 20px;">
+                                <p> After making sure all my filters were running smoothly, I implemented a few strategies to speed up the excecution of the main loop and the sampling rate. 
+                                    I deleted all my comments, and removed all my delays. I also moved the part where I checked if the data is ready in the main loop (see below). I was able to record a sampling rate
+                                    of about 315 messages per secodn this way this is almost double what I had before.
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab2.0/void.png" alt="Image 1" /></div>
+                                        <div style="margin-left: 8px;"><img style="height: 150px; width: auto;" src="images/lab2.0/sampling rate.png" alt="Image 2" /></div>
+                                    </div>
+                                </p>
+                            </div>
+                            
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
