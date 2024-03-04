@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab2">Lab 2</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab3">Lab 3</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 4</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 5</a></li>
                 </ul>
             </div>
         </nav>
@@ -54,9 +55,9 @@
             <hr class="m-0" />
             
             
-<!--------------------------------- LAB 1 ----------------------------------->
-<!--------------------------------- LAB 1 ----------------------------------->
-<!--------------------------------- LAB 1 ----------------------------------->
+<!------------------------------------- LAB 1 ----------------------------------->
+<!------------------------------------- LAB 1 ----------------------------------->
+<!------------------------------------- LAB 1 ----------------------------------->
             
             <section class="resume-section" id="lab1">
                 <div class="resume-section-content">
@@ -343,9 +344,9 @@
                 </div>
             </section>
             
-<!-------------------------------------- LAB 2 ---------------------------------------------->           
-<!-------------------------------------- LAB 2 ---------------------------------------------->
-<!-------------------------------------- LAB 2 ---------------------------------------------->
+<!------------------------------------- LAB 2 ---------------------------------------------->           
+<!------------------------------------- LAB 2 ---------------------------------------------->
+<!------------------------------------- LAB 2 ---------------------------------------------->
         
             <hr class="m-0" />
             <section class="resume-section" id="lab2">
@@ -532,9 +533,10 @@
             </section>
         
             <hr class="m-0" />
-<!----------------------------------- Lab 3 ------------------------------------->
-<!----------------------------------- Lab 3 ------------------------------------->
-<!----------------------------------- Lab 3 ------------------------------------->
+
+<!------------------------------------- Lab 3 ------------------------------------->
+<!------------------------------------- Lab 3 ------------------------------------->
+<!------------------------------------- Lab 3 ------------------------------------->
         
             <section class="resume-section" id="lab3">
                 <div class="resume-section-content">
@@ -694,6 +696,169 @@
                     </div>
                 </div>
             </section>
+
+
+<!------------------------------------- Lab 4 ------------------------------------->
+<!------------------------------------- Lab 4 ------------------------------------->
+<!------------------------------------- Lab 4 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab4">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 4</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p>The objective of this lab is to set up the two dual motor controllers and spin the wheels! Once we attach those, we can solder all the components together and to the artemis so everything
+                            can now sit on the car. I learned how to use a power supply and oscilloscope to verify functionality and I started calibrating the motors to move together with a linear relationship. </p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>2 x Qwiic connector</p>
+                            <p>1 x JST2 connector+cable</p>
+                            <p>1 x Force1 RC car</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
+                            <p>2 x Dual motor drivers</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">Februrary 21st</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. plan ------------------------------->
+                            <h3 class="mb-0">Prelab</h3>
+                            <div class="subheading mb-3">Wiring Diagram</div>
+                            <div style="margin-top: 20px;">
+                                <p> Here is the diagram of how I decided to wire the two motor controlers in parallel and to the artemis. Each motor controller needs two PWM pins becuase they each switch from 
+                                forward and backwards using PWM signal. Each board has 2 H bridges but we are only using one so I bridged both A1, B1 together and A2, B2 together. I decided to solder 3 wires together 
+                                for the motor controllers and battery to simplify the wiring, it's all grounded and power is deliverd to both boards. We are powering both motor controllers seperatly from the artemis 
+                                battery becuase running the motors drains the battery much quicker than the artemis. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/diagram.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> And here is how one of the soldered boards look!</p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/mcb.png" alt="..." /></span>
+                            </div>
+                            
+                            <!---------------------------2. soldering ------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Dual Motor Driver Setup</h3>
+                            <div class="subheading mb-3">Testing the first motor controller.</div>
+                            <div style="margin-top: 20px;">
+                                <p> Next I soldered the first motor contorller to the artemis, but connected the Vin and ground wires to the power supply, and the signal out wires to the oscilloscope. Here is 
+                                a picture of my setup. And this is the code that I sent the artemis to send a pulse signal to the motor contoller with a delay. I set the power supply to 3.7V as the data sheet suggested.</p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab4/scopesetup.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab4/mcbtest.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 20px;">
+                                <p> On the oscilloscope, I could change the size of the square wave based on how long the delay was and the size of the signal. This first picture of the oscilloscope display is
+                                from the code above, the second picture was me sending two different values. </p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            <!--------------------------->
+                            <div style="margin-top: 70px;" class="subheading mb-3">Strip the car!</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I oppened the car up and cut out the current controller board. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/stripped car.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> The wires that were previously attached to the motor were very loose and I accidently pulled them off, so I just soldered my signal out wires from my controller
+                                directly to the motor. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/batterysolder.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------->
+                            <div style="margin-top: 70px;" class="subheading mb-3">Turn the wheels!</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Next, with the external power supply plugged into the motors, I sent it a signal forwards and backwards by setting a value (between 0 and 255) to one pin and zero to the other, then switching directions by 
+                                    alternating which pin I was sending what. As you can see in this video I was very successful going forwards and back for just the first controller!
+                                </p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Then I did the same thing using a 850mAh battery insted of the power supply.</p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/ecXs9tZXLcU?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Final test was to repeat all the steps for the other motor controller. I was very happy to see it was all wired correctly and all four wheels ran as expected!</p>
+                                <iframe width="600" height="370" src="https://www.youtube.com/embed/WWETRaUm2M0?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 40px;">
+                                <p> Here is what my final car looked like all soldered and taped up! I chose to put one ToF sensor on what im calling the "front" and one on the side through the wheels.
+                                These locations are not permament but they intuitivly seemed like the most useful locations for obstacle avoidance. I put the IMU on the front on the black box becusue I wanted it to 
+                                lay flat and centered through the middle of the car. I put the artemis in the back with the usbc port and the battery port facing outwards becuase I plug and unplug those often. 
+                                The reset button is also easy to access. The rest of the wires are tucked into the empty hole, I tried to neatly fold them in but did not want to attach anyhting just incase there was an issue 
+                                with my soldering. I closed it over with a piece of duck tape that I can easily remove.   </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------------- two motor contollers! -------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Testing with wheels on ground</h3>
+                            <div class="subheading mb-3">Pros & Cons of each mode</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> With the car on the ground, I iterated through different combinations of values until both sides moved at the same speed and the car went straight. The ratio I found for left:right was 185:110.
+                                Here is what the basic code looked like while I was essentially guessing and checking. </p>
+                                <span class="d-none d-lg-block"><img style="width: 300px; height: auto;" src="images/lab4/manually testing ratios.png" alt="..." /></span>
+                                
+                                <p style="margin-top: 20px;"> Next, while maintaining this ratio of 185:110, I found the lowest value I could send to move the car. In the video below you can see how it barely moves.</p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/_MuioZLNG_8?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Now using this information of the ratio between wheels and the range of values I can use, I created a foward and backward drive function with a linear mapping. It maps an input value of 1-100
+                                to the coresponding motor values that maintian the ratio. I also put in a  duration paramter so you specify the speed (1-100) and how long you want it to drive for in millisecodns.
+                                Here is what my drive forward function looks like!</p>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab4/drive forward.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here is a video of it drivng forward where I set the speed to 50 and have it drive for 2.5 seconds! It goes pretty straight but I noticed at the end it turns a bit becuause one of the motors takes
+                                longer to slow down. This might be due to the friction inside each motor not being exacly the same. And I could fix this by finding the diffence in time it takes to slow each down and ofset their stop, but for now
+                                , I think this driivng straight is sufficient and we will play around more with correcting its trajecetory with PID control.  </p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/Jw8T402xqn0?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+
+                            <!--------------------------- Drive with turns ------------------------------->
+                            <h3 style="margin-top: 50px;" class="mb-0">Driving with turns</h3>
+
+                            <div style="margin-top: 30px;">
+                                <p> I made a few functions to simplify sending it commands. I made a forward and backward function, and made a turn left 90 and turn rihgt 180, to see how hard it was to tune these values. 
+                                It turned out to be much more tedius than I expected and after slighly adjusting the code, uploading and unplugging the robot several times, this process became very repetative and slow. 
+                                I did turns in place by spining one side forward and one side backward. Turns were hard to make accurate becuase there was so many variables I could adjust, like difference in speed between the wheels,
+                                turning speed, and how long to let it spin for. Overall I found pretty accurate values to send it and the following code is the series of commands I gave it. </p>
+                                <span class="d-none d-lg-block"><img style="width: 300px; height: auto;" src="images/lab4/command functions.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> Finally, here is the video of it performing these commands. Looks great! Besides the 180 turn that was undershot a bit, I'm happy with the accuracy for just manually adjusting. </p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/BHftcGmAwtA?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+                            
+                            
+                        
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
