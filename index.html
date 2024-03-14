@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Resume - Start Bootstrap Theme</title>
+        <title>Fast Robots - Patty Meza</title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -31,7 +31,8 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab2">Lab 2</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab3">Lab 3</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 4</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 5</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab5">Lab 5</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab6">Lab 6</a></li>
                 </ul>
             </div>
         </nav>
@@ -697,7 +698,6 @@
                 </div>
             </section>
 
-
 <!------------------------------------- Lab 4 ------------------------------------->
 <!------------------------------------- Lab 4 ------------------------------------->
 <!------------------------------------- Lab 4 ------------------------------------->
@@ -727,6 +727,390 @@
                             <p>2 x Dual motor drivers</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">Februrary 21st</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. plan ------------------------------->
+                            <h3 class="mb-0">Prelab</h3>
+                            <div class="subheading mb-3">Wiring Diagram</div>
+                            <div style="margin-top: 20px;">
+                                <p> Here is the diagram of how I decided to wire the two motor controlers in parallel and to the artemis. Each motor controller needs two PWM pins becuase they each switch from 
+                                forward and backwards using PWM signal. Each board has 2 H bridges but we are only using one so I bridged both A1, B1 together and A2, B2 together. I decided to solder 3 wires together 
+                                for the motor controllers and battery to simplify the wiring, it's all grounded and power is deliverd to both boards. We are powering both motor controllers seperatly from the artemis 
+                                battery becuase running the motors drains the battery much quicker than the artemis. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/diagram.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> And here is how one of the soldered boards look!</p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/mcb.png" alt="..." /></span>
+                            </div>
+                            
+                            <!---------------------------2. soldering ------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Dual Motor Driver Setup</h3>
+                            <div class="subheading mb-3">Testing the first motor controller.</div>
+                            <div style="margin-top: 20px;">
+                                <p> Next I soldered the first motor contorller to the artemis, but connected the Vin and ground wires to the power supply, and the signal out wires to the oscilloscope. Here is 
+                                a picture of my setup. And this is the code that I sent the artemis to send a pulse signal to the motor contoller with a delay. I set the power supply to 3.7V as the data sheet suggested.</p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab4/scopesetup.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab4/mcbtest.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 20px;">
+                                <p> On the oscilloscope, I could change the size of the square wave based on how long the delay was and the size of the signal. This first picture of the oscilloscope display is
+                                from the code above, the second picture was me sending two different values. </p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            <!--------------------------->
+                            <div style="margin-top: 70px;" class="subheading mb-3">Strip the car!</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I oppened the car up and cut out the current controller board. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/stripped car.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> The wires that were previously attached to the motor were very loose and I accidently pulled them off, so I just soldered my signal out wires from my controller
+                                directly to the motor. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/batterysolder.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------->
+                            <div style="margin-top: 70px;" class="subheading mb-3">Turn the wheels!</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Next, with the external power supply plugged into the motors, I sent it a signal forwards and backwards by setting a value (between 0 and 255) to one pin and zero to the other, then switching directions by 
+                                    alternating which pin I was sending what. As you can see in this video I was very successful going forwards and back for just the first controller!
+                                </p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Then I did the same thing using a 850mAh battery insted of the power supply.</p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/ecXs9tZXLcU?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Final test was to repeat all the steps for the other motor controller. I was very happy to see it was all wired correctly and all four wheels ran as expected!</p>
+                                <iframe width="600" height="370" src="https://www.youtube.com/embed/WWETRaUm2M0?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 40px;">
+                                <p> Here is what my final car looked like all soldered and taped up! I chose to put one ToF sensor on what im calling the "front" and one on the side through the wheels.
+                                These locations are not permament but they intuitivly seemed like the most useful locations for obstacle avoidance. I put the IMU on the front on the black box becusue I wanted it to 
+                                lay flat and centered through the middle of the car. I put the artemis in the back with the usbc port and the battery port facing outwards becuase I plug and unplug those often. 
+                                The reset button is also easy to access. The rest of the wires are tucked into the empty hole, I tried to neatly fold them in but did not want to attach anyhting just incase there was an issue 
+                                with my soldering. I closed it over with a piece of duck tape that I can easily remove.   </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------------- two motor contollers! -------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Testing with wheels on ground</h3>
+                            <div class="subheading mb-3">Pros & Cons of each mode</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> With the car on the ground, I iterated through different combinations of values until both sides moved at the same speed and the car went straight. The ratio I found for left:right was 185:110.
+                                Here is what the basic code looked like while I was essentially guessing and checking. </p>
+                                <span class="d-none d-lg-block"><img style="width: 300px; height: auto;" src="images/lab4/manually testing ratios.png" alt="..." /></span>
+                                
+                                <p style="margin-top: 20px;"> Next, while maintaining this ratio of 185:110, I found the lowest value I could send to move the car. In the video below you can see how it barely moves.</p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/_MuioZLNG_8?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Now using this information of the ratio between wheels and the range of values I can use, I created a foward and backward drive function with a linear mapping. It maps an input value of 1-100
+                                to the coresponding motor values that maintian the ratio. I also put in a  duration paramter so you specify the speed (1-100) and how long you want it to drive for in millisecodns.
+                                Here is what my drive forward function looks like!</p>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab4/drive forward.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here is a video of it drivng forward where I set the speed to 50 and have it drive for 2.5 seconds! It goes pretty straight but I noticed at the end it turns a bit becuause one of the motors takes
+                                longer to slow down. This might be due to the friction inside each motor not being exacly the same. And I could fix this by finding the diffence in time it takes to slow each down and ofset their stop, but for now
+                                , I think this driivng straight is sufficient and we will play around more with correcting its trajecetory with PID control.  </p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/Jw8T402xqn0?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+
+                            <!--------------------------- Drive with turns ------------------------------->
+                            <h3 style="margin-top: 50px;" class="mb-0">Driving with turns</h3>
+
+                            <div style="margin-top: 30px;">
+                                <p> I made a few functions to simplify sending it commands. I made a forward and backward function, and made a turn left 90 and turn rihgt 180, to see how hard it was to tune these values. 
+                                It turned out to be much more tedius than I expected and after slighly adjusting the code, uploading and unplugging the robot several times, this process became very repetative and slow. 
+                                I did turns in place by spining one side forward and one side backward. Turns were hard to make accurate becuase there was so many variables I could adjust, like difference in speed between the wheels,
+                                turning speed, and how long to let it spin for. Overall I found pretty accurate values to send it and the following code is the series of commands I gave it. </p>
+                                <span class="d-none d-lg-block"><img style="width: 300px; height: auto;" src="images/lab4/command functions.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> Finally, here is the video of it performing these commands. Looks great! Besides the 180 turn that was undershot a bit, I'm happy with the accuracy for just manually adjusting. </p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/BHftcGmAwtA?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+                            
+                            
+                        
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 5 ------------------------------------->
+<!------------------------------------- Lab 5 ------------------------------------->
+<!------------------------------------- Lab 5 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab5">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 5</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p>The objective of this lab is to implement closed loop linear control with a PID controller. Since the main loop 
+                            (with the controller) runs faster than the ToF sensor can read data, we also need to preform linear extrapolation on the 
+                            points where no new sensor data is read. We will only be driving straight towards a wall and stopping at a set distance from 
+                            the wall, where the PID controller brings it to this point using sensor feedback. This lab gave me the most trouble, from taking
+                            sensor data, to tuning the motors, and finally testing out PID values. But in the end I was able to get my car to succesfully reach 
+                            a specified distance efficiently.</p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
+                            <p>2 x Dual motor drivers</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">March 6th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. pre lab ------------------------------->
+                            <h3 class="mb-0">Prelab</h3>
+                            <div class="subheading mb-3">Set up of Debugging Method</div>
+                            <div style="margin-top: 20px;">
+                                <p> In order to debug my system and tune paramters, I was sending an array with all my data after each run. I did this by collecting 
+                                    the data in arrays as my control loop runs, and then once the arrayd were full, I sent them over as a large string. In my Pyhton 
+                                    script I have a notificaiton handle that handles these stirngs and stores it in a global array called data. So that when I go 
+                                    to grpah it, I can parse it by the seperating commas and graph whatever data I want vs time. 
+                                </p>
+                                <p> The Values I found it useful to send over were: The time that the data was taken, the raw TOF sensor readings 
+                                    (wich gave me -1 if it was not ready), the PWM value I'm imputting into the motors, the unscaled U value caluclated from adding P I D, 
+                                    The errors for the controller, the extrapolated data points combined with the real readings, and conteoller parameters kp, ki, kd. 
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here are screenshots of how I sent data over bluetooth from the arduino code and how I received it in my python script. In my arduino 
+                                    I'm basiclly just appedning it into on elarge string. Nad my notificaltion handler is always running so it is ready to collect data when 
+                                    it is sent over bluetooth. </p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab5/senddata.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 415px; width: auto;" src="images/lab5/getdata.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <!--------------------------- 2. Debugging ------------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Sending Data and Debugging</h3>
+                            <h5 style="margin-top: 1px;" class="mb-3">Various Issues I Encountered</h3>
+                            
+                            <div style="margin-top: 60px;">
+                                <div class="subheading mb-4">Sending data too slowly:</div>
+                                <p> From my overlayed graphs, I noticed that my data was not sending very frequently and therefore causing the data to be very choppy and the 
+                                car to not be very responsive to the control. I graphed the ToF sensor readings, error, u values and adjusted speed (see below). The way that I
+                                fixed this issue was simple, just by not calling sensor.stopRanging() in every loop only at the end solved this issue.</p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab5/sparse data.png" alt="..." /></span>
+                                
+                                <p> This also kept causing my car to crash into the wall becuase it would not detect it fast enough.</p>
+                                <iframe width="600" height="305" src="https://www.youtube.com/embed/C1ORVaEaJxM?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+                                <p> Once I fixed this, you can see in the graph below I was getting much more frequent readings. I also used the data to calculate how quickly
+                                 my main control loop was running and how frequently my data was being sent. This was easy to caluclate since when my ToF is not ready, it sends
+                                -1, so i just filterd these out and averegd the time in between readings.</p>
+                                <p> Frequency of the control loop: <b>113.7 [loops/s]</b><br>
+                                  Frequency of ToF data: <b>10.2 [loops/s]</b></p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="width: 500px; height: auto;" src="images/lab5/nointerp.png" alt="Image 1" /></div>
+                                    <div style="margin-top: 40px; style="margin-left: 8px;"><img style="width: 500px; height: auto;" src="images/lab5/loop time.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+
+                            <div style="margin-top: 60px;">
+                                <div class="subheading mb-4">Extrapolating wrong:</div>
+                                <p> For a lot of the lab I thought I had extrapolated the data but in fact I was interpolating instead! Though the graph looked nice, you can see 
+                                that it was jagged (like a staircase) and i was actually inteprolating in between data points, and inteproloating from both interpolated points and real ToF
+                                readings. Though this was not an issue at the time, it would later lead to issues becuase I was inteprolating from points that were not real. Here is what my nice 
+                                (but not correct) interpolated data looked like.</p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab5/interpolated.png" alt="..." /></span>
+
+                                <p> Here is what my <b>Extrapolated</b> data looked like after I fixed it. The way it works is once I received at least two data points I calculate the 
+                                slope between them, I only claucalte the slope from real snesor values and store it. While the sensot is not ready, i use that same slope and the time that 
+                                has passed to extrapolate lineaely where it would be next. Here is my new plotted data and my code implementation.</p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab5/fixed extrapolated.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab5/extrapcode.png" alt="Image 2" /></div>
+                                </div>
+
+                                <p style="margin-top: 20px;"> Moral of the story: Extrapolation does not equal Interpolation</p>
+                            </div>
+
+                            <div style="margin-top: 60px;">
+                                <div class="subheading mb-4">Still not driving straight:</div>
+                                <p> Even though last week I experimentally found the deadband zone of the motors together and an aproximate ratio of speeds betwen them, once I implemented
+                                the PID on this lab, they were very out of sync. This is becuase for this lab I set it up so I have a speerate function for each wheel which I send the same u.
+                                but you can see from this video, each mottor has a very differnt deadband indiviidually, one would comepletely stop whle the other one is still going, causing
+                                it to turn on the ground. </p>
+                                <iframe width="600" height="305" src="https://www.youtube.com/embed/gqbAkoinmnM?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> I had to go back and re-calculate the deadband limits of each wheel, and the PWM ratios between motors for going both forwards and backwards together. Here is my two
+                                motor functions for driving straight.</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab5/lefttune.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab5/righttune.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 60px;">
+                                <div class="subheading mb-4">Maping PWM values wrong:</div>
+                                <p> The last issue (there were many more ) I encounted that I wanted to address was how I was mapping the PWM values wrong but could not tell
+                                from my physical driving test. But I discovered this from my graphs! As you can see in tis video, the controller works very well, even though it was dirivng a bit slow.
+                                I did not see an issue initially because it was able to stop 300 mm from the wall and correct the overshoot pretty accurateley. The issue I was tyring to figrue out was why
+                                it was correcting so slowly and sometiumes it would not correct at all. I think I would get a false "working trial" when it had enough momentum to reach it's goal.</p>
+                                <iframe width="640" height="310" src="https://www.youtube.com/embed/NoBLHtuZgso?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                
+                                <p> By looking at the two graphs below, I realised I was cutting off the lower and higher pwm values but not mapping my u vaues proportionately in the working range. So the controller 
+                                    would tell it to move slowly, but that was in my cuttoff range so it would not move at all. You can see in this grpah the blue and the purple follow eachother until it falls below a 
+                                    certain range.</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab5/corrects v slowly.png" alt="Image 1" /></div>
+                                    <div style="margin-top: 50px;" style="margin-left: 8px;"><img style="height: 240px; width: auto;" src="images/lab5/mapwrong.png" alt="Image 2" /></div>
+                                </div>
+                                
+                                <p> I fixed this by mapping the u values so that the lowest u (zero) correspond to the lowest value in the working range, and a u of 100 would correspond to a PWM of 255. Then I did this for 
+                                    negative u values. Here is a grpah of what my new mapping looks like. And the car is much faster and alwyas reaches the goal. My code for this mapping is above in my last section. </p>
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab5/map.png" alt="Image 1" /></div>
+                                    <div style="margin-top: 20px;" style="margin-left: 8px;"><img style="height: 240px; width: auto;" src="images/lab5/mapwrong.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <!--------------------------->
+                            <div style="margin-top: 70px;" class="subheading mb-3">PID Implementation</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> For the controller, I used PID control. PID stands for proportional, integral and derivitive. This is the formula to calculate the neccissary velocity to reach a goal "u"</p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab5/PID.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> video with failed just P</p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Tuning Kp</p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <!--------------------------->
+                            <div style="margin-top: 20px;">
+                                <p> Adding Kd </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab4/batterysolder.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Tuning Kd </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <!--------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Proving Control</h3>
+                            <div style="margin-top: 70px;" class="subheading mb-3">A few trials to prove that the controller works!</div>
+
+
+                            <div style="margin-top: 20px;">
+                                <p> pid = blah blah video</p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> graph </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> pid = blah blah video</p>
+                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> graph </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                            </div>
+
+                            
+
+                            <!--------------------------------- Final discussion -------------------------------->
+                            <div class="subheading mb-3">Final discussion</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Now using this information of the ratio between wheels and the range of values I can use, I created a foward and backward drive function with a linear mapping. It maps an input value of 1-100
+                                to the coresponding motor values that maintian the ratio. I also put in a  duration paramter so you specify the speed (1-100) and how long you want it to drive for in millisecodns.
+                                Here is what my drive forward function looks like!</p>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab4/drive forward.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here is a video of it drivng forward where I set the speed to 50 and have it drive for 2.5 seconds! It goes pretty straight but I noticed at the end it turns a bit becuause one of the motors takes
+                                longer to slow down. This might be due to the friction inside each motor not being exacly the same. And I could fix this by finding the diffence in time it takes to slow each down and ofset their stop, but for now
+                                , I think this driivng straight is sufficient and we will play around more with correcting its trajecetory with PID control.  </p>
+                                <iframe width="600" height="340" src="https://www.youtube.com/embed/Jw8T402xqn0?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe> 
+                            </div>
+                            
+                            
+                        
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 6 ------------------------------------->
+<!------------------------------------- Lab 6 ------------------------------------->
+<!------------------------------------- Lab 6 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab6">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 6</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p>The objective of this lab is to set up the two dual motor controllers and spin the wheels! Once we attach those, we can solder all the components together and to the artemis so everything
+                            can now sit on the car. I learned how to use a power supply and oscilloscope to verify functionality and I started calibrating the motors to move together with a linear relationship. </p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>2 x Qwiic connector</p>
+                            <p>1 x JST2 connector+cable</p>
+                            <p>1 x Force1 RC car</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
+                            <p>2 x Dual motor drivers</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">March 13th</span></div>
                     </div>
                         
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
