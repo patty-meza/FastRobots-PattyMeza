@@ -1006,21 +1006,26 @@
                             <div style="margin-top: 70px;" class="subheading mb-3">PID Implementation</div>
 
                             <div style="margin-top: 20px;">
-                                <p> For the controller, I used PID control. PID stands for proportional, integral and derivitive. This is the formula to calculate the neccissary velocity to reach a goal "u"</p>
+                                <p> For the controller, I used PID control. PID stands for proportional, integral and derivitive. This is the formula to calculate the velocity "u" needed to reach a goal. Were
+                                error "e" is the differnce between the goal and your current position.</p>
                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab5/PID.png" alt="..." /></span>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> video with failed just P</p>
-                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> I first started with only just implementing P. I made a function called PID_control that takes in parameters kp, ki, and kd, and I set
+                                them all to zero in my code setup. In my main loop, I collect the current data, then I call the PID function to calculate a value of u.
+                                Then this u gets passed into both motor fucntions. Here is what my PID function looks like with only P. </p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab5/kp.png" alt="..." /></span>
                             </div>
-
                             <div style="margin-top: 20px;">
-                                <p> Tuning Kp</p>
-                                <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
-                                </div>
+                                <p> I made a function so that i can quikly tune the parameters over bluetooth so i can adjust them with an iterative apporch to find ideal values.
+                                    I started with a kp of 1, wich made the car instantly crash into the wall (good thing we had crash pads), then I started slowly decreasing the value
+                                    until it wouldnt crash into the wall and could quikcly correct to the goal. i found the value of <b>kp = 0.04 </b> to be ideal for my system
+                                    becuase any slower the car woould strigle to move at a reasnaleb pace, and higher values would make it overshoot too much. Here is a video of
+                                    my car with only the porportional controller.   </p>
+                                <iframe width="650" height="320" src="https://www.youtube.com/embed/K72eUIcbzMM?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> graph </p>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab5/nod.png" alt="..." /></span>
                             </div>
 
                             <!--------------------------->
@@ -1037,24 +1042,41 @@
                                 </div>
                             </div>
 
+                            <div style="margin-top: 20px;">
+                                <p> What about I? I decided not to implelemt I because i helps reduce steady state errror. I did not find I did anything especially because 
+                                i did not have any steady state errror. and it can increase overshoot. wich i already have a bit too much of.  </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/scope.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 250px; width: auto;" src="images/lab4/2diffspeeds.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
                             <!--------------------------->
                             <h3 style="margin-top: 60px;" class="mb-0">Proving Control</h3>
                             <div style="margin-top: 70px;" class="subheading mb-3">A few trials to prove that the controller works!</div>
 
-
                             <div style="margin-top: 20px;">
                                 <p> pid = blah blah video</p>
-                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/sDxzzf49MZc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                                 <p> graph </p>
-                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab5/long.png" alt="..." /></span>
                             </div>
 
                             <div style="margin-top: 20px;">
                                 <p> pid = blah blah video</p>
-                                <iframe width="600" height="325" src="https://www.youtube.com/embed/yJLKeyljiKc?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/r_l4wXSvBTw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                                 <p> graph </p>
-                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab4/labeled car.png" alt="..." /></span>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab5/medium.png" alt="..." /></span>
                             </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> pid = blah blah video</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/d95cVfNwhMU?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> graph </p>
+                                <span class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab5/short.png" alt="..." /></span>
+                            </div>
+
+                            
 
                             
 
