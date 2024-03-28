@@ -1286,7 +1286,9 @@
                             <!---------------------------INTRO------------------------------->
                             <h3 class="mb-0">Introduction</h3>
                             <div class="subheading mb-3">Lab Objectives</div>
-                            <p> The objective of this lab is to implement a Kalman filter to excecute behaviour even quicker! Instead of extrapolating between time of flight sensor readings, I used a Kalman filter to predict the state of the robot. To learn how to implement the kalman filter, I collected data to test with while excecuting the old PID code and ran the Kalman filter on the similated trial. Eventually this can be implemented with live data on the robot  </p>
+                            <p> The objective of this lab is to implement a Kalman filter to excecute behaviour even quicker! Instead of extrapolating between time of flight 
+                            sensor readings, I used a Kalman filter to predict the state of the robot. To learn how to implement the kalman filter, I collected data to test 
+                        with while excecuting the old PID code and ran the Kalman filter on the similated trial. Eventually this can be implemented with live data on the robot. </p>
                             <div class="subheading mb-3">Components</div>
                             <p>1 x SparkFun RedBoard Artemis Nano</p>
                             <p>1 x USB cable</p>
@@ -1305,7 +1307,7 @@
                             <div class="subheading mb-3">Building the state space model</div>
                             <div style="margin-top: 20px;">
                                 <p> The State space model I will be using was derived in class from a basic force balance (F = ma) asuming it reaches terminal velocity using 
-                                    momentum and drag components. As you can see from the mdoel below, for the A and B matrix I need to coalcualte the actual vlaues for meomentum(m) 
+                                    momentum and drag components. As you can see from the mdoel below, for the A and B matrix I need to calculate the actual values for momentum(m) 
                                     and drag(d) it order to properly characterize our system.
                                  <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab7/state space.png" alt="..." /></span>
                                 </p>
@@ -1321,7 +1323,7 @@
                                 <p> I averaged the last four velocity points before it hit the wall to use as my approximate value for terminal velocity. The terminal velocity I calculated was 
                                     <b>vt = 2.695 [m/s]</b>. Then I used this to calculate my 90% rise with my graph. I calculated 0.9*vt and then chose a point
                                     where it first reached that value. As you can see in the graph below there is a jump down then up into the 90 percent region but I imagined it was noise and 
-                                    tried to make an approximation as if the velocityy was more continous. I approximated that <b>dt_0.9 = 0.572 [s] </b>.
+                                    tried to make an approximation as if the velocity was more continous. I approximated that <b>dt_0.9 = 0.572 [s] </b>.
                                  <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab7/rise time.png" alt="..." /></span>
                                 </p>
                                 <p>  
@@ -1367,18 +1369,18 @@
                             <div style="margin-top: 10px;">
                                 <p> Now to implement the Kalman filter I need to specify my process noise and sensor noise covariance matrices. My variable sigma 1 represents the state uncertainty of position,
                                 sigma 2 represents state uncertainty of velocity, and sigma 3 represents the sensor uncertainty. The sensor uncertainty was determined from the hardware limitations of 20mm. For 
-                                the state uncertainties, the standard deviations were calculated with the sampling rate of 95mm. In my code below I put these into the respective noise matrices. </p>
+                                the state uncertainties, with the sampling rate the standard deviation was calculated of 95mm. In my code below I put these into the respective noise matrices. </p>
                                 <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab7/noise code.png" alt="..." /></span>
                             </div>
                             <div style="margin-top: 10px;">
                                 <p> Next, I defined the kalman filter function. This left image are the steps for a generic kalman filter and the right is my function in python. You can see some steps look the 
-                                except the main differnce is my sensor data is not always ready while the loop continues. To address this, for the times in between when the data is not ready, it only performs the prediciton steps, 
+                                same except the main differnce is my sensor data is not always ready while the loop continues. To address this, for the times in between when the data is not ready, it only performs the prediciton steps, 
                                 but when the data is ready, it does both prediciton and update steps.  </p>
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/kalman steps.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/kalman func.png" alt="Image 2" /></div>
                                 </div>
-                                <p> Now to "simulate" how a kalman filter would work on the running robot, I looped though the ToF data and passed the u(t) values into my kalman filter
+                                <p style="margin-top: 20px;"> Now to "simulate" how a kalman filter would work on the running robot, I looped though the ToF data and passed the u(t) values into my kalman filter
                                 function. After each loop I stored the state estimate values for postion and velocty. </p>
                                 <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab7/kalman run.png" alt="..." /></span>
                             </div>
@@ -1388,7 +1390,7 @@
                             <h3 style="margin-top: 90px;" class="mb-0">Final (simulated) Filter</h3>
 
                             <div style="margin-top: 10px;">
-                                <p> Here is is a graph showing hwo my Kalman filter works and accurealy predicts the points in bwteen the sensor data. This is a grpah of sensor
+                                <p> Here is is a graph showing how my Kalman filter works and accurately predicts the points in bewteen the sensor data. This is a grpah of sensor
                                 position vs time and kalman position state estimate vs time. As you can see it works very well for this driving application and follows a very similar path to the sensor but smoothes
                                 it out in between. This appears to be better than the linear extraplation we implemented in an earlier lab. </p>
                                 <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab7/final kal.png" alt="..." /></span>
