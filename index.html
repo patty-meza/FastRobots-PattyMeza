@@ -33,6 +33,8 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 4</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab5">Lab 5</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab6">Lab 6</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab7">Lab 7</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8</a></li>
                 </ul>
             </div>
         </nav>
@@ -1109,7 +1111,7 @@
                             <p>1 x Li-Ion 3.7V 850mAh battery</p>
                             <p>2 x Dual motor drivers</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 6th</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary">March 13th</span></div>
                     </div>
                         
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -1268,6 +1270,333 @@
                 </div>
             </section>
 
+
+<!------------------------------------- Lab 7 ------------------------------------->
+<!------------------------------------- Lab 7 ------------------------------------->
+<!------------------------------------- Lab 7 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab7">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 7</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> The objective of this lab is to implement a Kalman filter to excecute behaviour even quicker! Instead of extrapolating between time of flight sensor readings, I used a Kalman filter to predict the state of the robot. To learn how to implement the kalman filter, I collected data to test with while excecuting the old PID code and ran the Kalman filter on the similated trial. Eventually this can be implemented with live data on the robot  </p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
+                            <p>2 x Dual motor drivers</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">March 20th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. pre lab ------------------------------->
+                            <h3 class="mb-0">Estimate Drag and Momentum</h3>
+                            <div class="subheading mb-3">Building the state space model</div>
+                            <div style="margin-top: 20px;">
+                                <p> The State space model I will be using was derived in class from a basic force balance (F = ma) asuming it reaches terminal velocity using 
+                                    momentum and drag components. As you can see from the mdoel below, for the A and B matrix I need to coalcualte the actual vlaues for meomentum(m) 
+                                    and drag(d) it order to properly characterize our system.
+                                 <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab7/state space.png" alt="..." /></span>
+                                </p>
+                                <p> In order to determine these values expiramentally, I first drove the car towards the wall and took distance and time measurements. I plotted graphs 
+                                    of distance vs time and then calculated velocity by using the slopes between consective points. I was sending a constant motor input of 60% of my max pwm.
+                                    As you can see in the distance graph it reaches terminal velocity once the the graph becomes linear. Then in the velocity graph it is roughly a constant speed at the
+                                    end. 
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab7/distance vs time.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab7/velocity.png" alt="Image 2" /></div>
+                                </div>
+                                </p>
+                                <p> I averaged the last four velocity points before it hit the wall to use as my approximate value for terminal velocity. The terminal velocity I calculated was 
+                                    <b>vt = 2.695 [m/s]</b>. Then I used this to calculate my 90% rise with my graph. I calculated 0.9*vt and then chose a point
+                                    where it first reached that value. As you can see in the graph below there is a jump down then up into the 90 percent region but I imagined it was noise and 
+                                    tried to make an approximation as if the velocityy was more continous. I approximated that <b>dt_0.9 = 0.572 [s] </b>.
+                                 <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab7/rise time.png" alt="..." /></span>
+                                </p>
+                                <p>  
+                                    Then I used the following equations to calculate drag and momentum, where u = 1. u is a value from [0-1] representing the speed the car is driving at. 
+                                </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 100px; width: auto;" src="images/lab7/drag.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 100px;"><img style="height: 100px; width: auto;" src="images/lab7/momentum.png" alt="Image 2" /></div>
+                                </div>
+                                <p> Laslty, I used these values to form my A and B matrix. Then I discretized my matrices for each timestep, by multiplying each A & B by my timestep (dt).
+                                    I found my dt by calculating the average time in between each measurement. I calculated my averge dt as <b>dt = 0.011 [s]</b>.
+                                 <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 130px; width: auto;" src="images/lab7/state space code.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 100px; width: auto;" src="images/lab7/correct dt.png" alt="Image 2" /></div>
+                                </div>
+                                </p>
+                            </div>
+
+                            
+                            <!--------------------------- 2. Integrating PID ------------------------------->
+                            <h3 style="margin-top: 90px;" class="mb-0">Kalman Filter Setup</h3>
+                            <div class="subheading mb-3">Collecting Data</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Before taking any data, I implemented this code in my python to save my data to a csv file on my computer and additionally code pull data from
+                                the exsisting csv file into python arrays I can use. This was extremly helpful so that when I closed the terminal I did not loose any data permenantly. 
+                                This way I only needed to take one good trial and save it to use with my kalman filter. </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/addtocsv.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/grabcsv.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Now using my code from lab 5 (linear PID), I took a few trials of the car driving towards a set distance from the wall until I was happy. 
+                                As I recorded, the data that was important to send back was the ToF readings, time, and speed input into the motors u(t). Here is the data I collected from that trial.</p>
+                                <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab7/pid trial.png" alt="..." /></span>
+                            </div>
+                            
+                            <!--------------------------->
+                            <div style="margin-top: 50px;" class="subheading mb-3">Kalman Filter!</div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Now to implement the Kalman filter I need to specify my process noise and sensor noise covariance matrices. My variable sigma 1 represents the state uncertainty of position,
+                                sigma 2 represents state uncertainty of velocity, and sigma 3 represents the sensor uncertainty. The sensor uncertainty was determined from the hardware limitations of 20mm. For 
+                                the state uncertainties, the standard deviations were calculated with the sampling rate of 95mm. In my code below I put these into the respective noise matrices. </p>
+                                <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab7/noise code.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <p> Next, I defined the kalman filter function. This left image are the steps for a generic kalman filter and the right is my function in python. You can see some steps look the 
+                                except the main differnce is my sensor data is not always ready while the loop continues. To address this, for the times in between when the data is not ready, it only performs the prediciton steps, 
+                                but when the data is ready, it does both prediciton and update steps.  </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/kalman steps.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab7/kalman func.png" alt="Image 2" /></div>
+                                </div>
+                                <p> Now to "simulate" how a kalman filter would work on the running robot, I looped though the ToF data and passed the u(t) values into my kalman filter
+                                function. After each loop I stored the state estimate values for postion and velocty. </p>
+                                <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab7/kalman run.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <!--------------------------->
+                            <div style="margin-top: 50px;" class="subheading mb-3">Final (simulated) Filter</div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Here is is a graph showing hwo my Kalman filter works and accurealy predicts the points in bwteen the sensor data. This is a grpah of sensor
+                                position vs time and kalman position state estimate vs time. As you can see it works very well for this driving application and follows a very similar path to the sensor but smoothes
+                                it out in between. This appears to be better than the linear extraplation we implemented in an earlier lab. </p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab7/final kal.png" alt="..." /></span>
+                                <p> And here is what my Kalman filter for velocity looks like. I am suprised how well that worked because the velocities calculated from the ToF were extremlely noisey.</p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab7/kf vel.png" alt="..." /></span>
+                            </div>
+
+                           
+                            <!--------------------------------- Final discussion -------------------------------->
+                            
+                            <div style="margin-top: 40px;">
+                                <p> Overall, I gained a good understaning on how to impelement a kalman filter on an actual system instead of just calculaing it with genral formulas.
+                                The next steps would be to try less predictable movements on my robot and see how the kalman filter performs. I would laso like to see the comaprison
+                                between linear extrapoaltion and kalman filter for differnt applications. Laslty, If I have the time, I want to implement this on the actual robot in real time. 
+                                I woud add it to my current linear PID code and put it in instead do the extrapolation. </p>
+                            </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 8 ------------------------------------->
+<!------------------------------------- Lab 8 ------------------------------------->
+<!------------------------------------- Lab 8 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab8">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 8</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> The objective of this lab is to implement STUNTS
+                                I am now using the gyroscope measurements on the IMU turn a set a target angle. I set up the code so I choose a goal angle relative to its current position, 
+                                then using PID control, the car turns to that angle quickly using gyroscpe feedback, I have a positive angle indicating counter-clockwise and a negative 
+                                angle indicating clockwise. In the end I was able to get my car to succesfully reach a specified angle acurately.</p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>1 x USB cable</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x QWIIC Breakout board</p>
+                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
+                            <p>2 x Dual motor drivers</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">March 27th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. pre lab ------------------------------->
+                            <h3 class="mb-0">Prelab</h3>
+                            <div class="subheading mb-3">Set up of Debugging Method</div>
+                            <div style="margin-top: 20px;">
+                                <p> In order to debug my system and tune parameters, I was sending an array with all my data after each run. I did this by collecting the data 
+                                    in arrays as my control loop runs, and then once the arrays were full, I sent them over as a large string. In my Python script, I have a 
+                                    notification handler that handles these strings and stores them in a global array called data. So that when I go to graph it, I can parse 
+                                    it by separating commas and graph whatever data I want versus time.
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here are screenshots of how I sent data over Bluetooth from the Arduino code and how I received it in my Python script. In my Arduino, I'm basically 
+                                just appending it into one large string. And my notification handler is always running so it is ready to collect data when it is sent over Bluetooth. </p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab6/sendingData.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab6/receive data.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+                            
+                            <!--------------------------- 2. Integrating PID ------------------------------->
+                            <h3 style="margin-top: 70px;" class="mb-0">PID Control</h3>
+                            <div class="subheading mb-3">Setting up PID Implementation</div>
+
+                            <div style="margin-top: 20px;">
+                                <p> For the controller, I used PID control. PID stands for proportional, integral and derivitive. This is the formula to calculate the velocity "u" needed to reach a goal. 
+                                    Where error "e" is the differnce between the goal and your current position.</p>
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab5/PID.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> I first started making my PID function called PID_Control_turn that takes in parameters kp, ki, and kd and caluclates 3 values of speed (u). These pu, iu, and du values
+                                    get added together eventually to calculate what is the total value of u (motor speed) required by the system to reach the angle goal. In my main loop, I collect the current data, 
+                                    then I call the PID function to calculate a value of u. Then this u gets passed into both motor functions. Here is what my PID function looks like.</p>
+                                <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab6/pid turn.png" alt="..." /></span>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> I made a function so that I can quickly tune the parameters over Bluetooth, so I can adjust them with an iterative approach to find ideal values. I also made a case to update
+                                    the goal angle in real time. Both of these features made tuning paramaters significantly quicker and more effective. Here my case for setting the gains (kp, ki, kd).
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab6/updatek.png" alt="..." /></span>
+                            </div>
+                            <!--------------------------->
+                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning kp</div>
+
+                            <div style="margin-top: 10px;">
+                                <p> The first parameter I tuned was kp, starting with kp = 1, ki = 0, and kd = 0. I set the goal angle to 90 degrees and I slowly increased kp until it quickly hit 90 degrees without too
+                                much overshoot and spinning out of control. If it spun too fast, the gyroscope readings would be very inaccurate. I found a kp of 0.15 to be enough to reach the goal and not overshoot
+                                too much for 90 degrees. But once I tried 180 degrees, it would overshoot without the sensor knowing. Here is the video of my test with the goal angle = 180 degrees and only kp.  </p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/NyTlDKSBqzE?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> As you can see in this video it overshoots and is oscillating around that overshoot angle. And below is my graph. Though the graph makes it look good, we know by the the physical test
+                                    that the sensor is misinterperating 180 degrees. </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/off180.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <!--------------------------->
+                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning kd</div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Secondly, I tuned kd. Keeping kp the same, I slowly raised the kd until the overshoot was gone. I did it for 90 degrees and then for 180 degrees. Here are two trials while I kept raising kd
+                                with kp = 0.15. This worked much better than kp alone but I was first tuning it to work well with 180 degrees, then when I tested it for 90, it was very slow to reach the goal. Also,
+                                overtime it would still drift away from the setpoint. </p>
+                                <p> <b> Target angle = 90 degrees </b> </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/slow 90.png" alt="..." /></span>
+                                <p> <b> Target angle = -180 degrees </b> </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/better 180.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Accoridng to the spec sheet of the IMU, there is a low pass filter that can be controlled with a simple function "setDLPFcfg", but my data was not noisy enough to be affected so I did not implement it. 
+                                    Derivitive kick is also somehting I had to address. Dervitive kick is when there is a sudden jump in the derivative term due to a large change over a short period of time, so this could be due to noisy data, 
+                                    or in the context of our car, this could be an issue when switching between set points in one run. In order to prevent this when caluclating the derivitive term, instead of multiplying kd by the differnce in errors
+                                    over dt (the issue is that error would jump when the new setpoint is declared), I mupltiplied kd by the difference in angles over dt. This is essentially the same thing becuase if error = goal - distance from goal, this is 
+                                    treating it as if the goal is zero degrees (but multiply it by -1). Essentially it corrects in the same manor. You cen see how I implemented this above in my PID function. </p>
+                            </div>
+
+                            <!--------------------------->
+                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning ki</div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Last, I tuned ki to get rid of the steady state error.  This one was much more finnicky and now my method of guessing and checking was not too straight forward. To prevent
+                                integrator wind up, I cuttoff the accumilation of error at 50 and negative 50. This a pretty small cutoff but I did not want my ki to be contributing much anyways since my controller was 
+                                very good as is and I wanted to give no leaneancy for it to wind up. </p>
+                                <p> While keeping kd and kp constant, I started with a value of ki = 0.001, it was instantly unstable.</p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/windup.png" alt="..." /></span>
+                                <p> I figured ki was still to high so I decreased it and this was my result. </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/right sign.png" alt="..." /></span>
+                                <p> Then, I wanted to decrease my overshoot and have it correct faster so I thought to increase both kp and kd. </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/random tuning.png" alt="..." /></span>
+                                <p> As you can see this random tuning approach was not going very well so next I decided to try the heuristic procedure #2 we learned in class. The procedure is as follows: 
+                                <p> 1. Set KD and KI to 0 <br> 2.Increase KP until oscillation, then decrease by factor of 2-4 <br> 3. Increase KI until loss of stability, then back off <br> 4. Increase KD to increase performance in response to disturbance
+                                    <br> 5. Iterate</p>
+                                <p> Here is some of what that process looked like. (not looking great) </p>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/itoo high.png" alt="..." /></span>
+                                <span class="d-none d-lg-block"><img style="width: 790px; height: auto;" src="images/lab6/tuning apprach1.png" alt="..." /></span>
+                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/d30.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> So after this approach, I went back to my original controller and I almost gave up on teh integral term, but a key thing that helped my controller improve by a lot is by chanaging the "full scale range" of the 
+                                gyroscope. You can manually set the range of angular velocites that are most optimal for the sensor readings. I increased it to the max range of 2000 deg/sec.</p>
+                                    <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/change full scale range.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Another thing that improved my controller was deleting the print statements to increase my sampling rate. I did not relsie how long the pritning
+                                took. Below is my calculation for sampling rate before and after I removed my print statements. It almost halved the time! </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 115px; width: auto;" src="images/lab6/with print.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 115px; width: auto;" src="images/lab6/without print.png" alt="Image 2" /></div>
+                                </div>
+                            </div>
+
+
+                            <!--------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Final orientation controller</h3>
+                            <div style="margin-top: 10px;" class="subheading mb-3">A few trials to prove that the controller works!</div>
+
+                            <div style="margin-top: 40px;">
+                                <p> I eventually tweaked my gains to a controller I was happy with. My final gain values were <b> kp = 0.35, ki = 0.000015, and kd = 40 </b></p>
+                                
+                                <p> 1. This first trial is with the target angle of <b>90 degrees</b></p>
+                                <iframe width="650" height="355" src="https://www.youtube.com/embed/FK4PR5fT1zI?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 90.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 40px;">
+                                <p> 1. This second trial is with the target angle of <b>180 degrees</b></p>
+                                <iframe width="650" height="355" src="https://www.youtube.com/embed/_LfkKyl9ckY?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 180.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 40px;">
+                                <p> 3. This third trial is with the target angle of <b>270 degrees</b></p>
+                                <iframe width="650" height="355" src="https://www.youtube.com/embed/K3IGT48KzmE?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 270.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <!--------------------------------- Final discussion -------------------------------->
+                            
+                            <div style="margin-top: 40px;">
+                                <p> Overall, I am very happy with my controller performance. a big thing I learned was that in the real world, the equations we use to control our systems and approaches to tune parameters
+                                are just approximations of models, they are a good start but the best way to control your system is by understanding exacly how each component works and it's limitations.
+                                For tuning you need to slowly iterate while understanding the system's resposne.</p>
+                            </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
 
         </div>
         <!-- Bootstrap core JS-->
