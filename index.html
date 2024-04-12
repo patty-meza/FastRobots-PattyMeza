@@ -35,6 +35,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab6">Lab 6</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab7">Lab 7</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 9</a></li>
                 </ul>
             </div>
         </nav>
@@ -1429,42 +1430,184 @@
                             <!---------------------------INTRO------------------------------->
                             <h3 class="mb-0">Introduction</h3>
                             <div class="subheading mb-3">Lab Objectives</div>
-                            <p> The objective of this lab is to implement STUNTS
-                                I am now using the gyroscope measurements on the IMU turn a set a target angle. I set up the code so I choose a goal angle relative to its current position, 
-                                then using PID control, the car turns to that angle quickly using gyroscpe feedback, I have a positive angle indicating counter-clockwise and a negative 
-                                angle indicating clockwise. In the end I was able to get my car to succesfully reach a specified angle acurately.</p>
+                            <p> The objective of this lab is to do a stunt with the car. Now that we have set everything up, we have all the neccissary tools to perform various stunts. 
+                            I chose to try both stunts for this lab and only one was successful. This lab has a lot of flexibility and I got to play around with what aspects from previous labs would be benificial for my stunt.</p>
                             <div class="subheading mb-3">Components</div>
+                            <p>1 x R/C stunt car</p>
                             <p>1 x SparkFun RedBoard Artemis Nano</p>
-                            <p>1 x USB cable</p>
+                            <p>2 x Li-Po 3.7V 650mAh (or more) battery</p>
+                            <p>2 x Dual motor driver</p>
                             <p>2 x 4m ToF sensor</p>
-                            <p>1 x QWIIC Breakout board</p>
-                            <p>1 x Li-Ion 3.7V 850mAh battery</p>
-                            <p>2 x Dual motor drivers</p>
+                            <p>1 x 9DOF IMU sensor</p>
+                            <p>1 x Qwiic connector</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 27th</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary">April 3rd</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. task A ------------------------------->
+                            <h3 class="mb-0">Task A: Position Control</h3>
+                            <div class="subheading mb-3">The Task</div>
+                            <div style="margin-top: 20px;">
+                                <p> The stunt I chose to perform first was task A. This consists of the robot starting at designated line (<4m from the wall), drive fast
+                                 forward towards the wall, and at 0.5m away, perform a flip, and drive back in the direction from which it came. This stunt will be 
+                                 considered successful if my robot manages to succesfully do a flip. The score will depend on how quickly the car makes it back past 
+                                 the initial starting line.
+                                </p>
+                            </div>
+
+                            <div class="subheading mb-3">Setting Up the Code</div>
+                            <div style="margin-top: 20px;">
+                                <p> I decided to go back to the linear PID code and start here. I will not be using PID control since I dont want the robot to slow down at 
+                                the goal because it needs momentum for the flip. I chose to use extrapolation with the ToF readings becuase from lab 5, it showed to 
+                                be very effective and accurate when driving in a straight line. Since the straight line is not too difficult to predict, I dont beleive I need
+                                to do kalman filter to get more accuracy, the extrapolation along with tuning parameters will be sufficiant.</p>
+
+                                <p> A basic overview of the code is I command the robot to drive froward at fuLl speeed and take ToF measuremnts simultaniously. Once it is at 
+                                the 0.5 m mark, instantly start driving backwards at full speed. The data I returned over bluetooth debug was the ToF measurements, time, and motor input values. 
+                                Here is a graph of what one of the earlier trials looked like. ("wall" is supposed to be the specific distance from the wall).</p>
+
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab8/speed at wall.png" alt="..." /></span>
+                            </div>
+
+                            <div class="subheading mb-3">Trials</div>
+                            <div style="margin-top: 20px;">
+                                <p> So unfortunately, no matter how many times I tried and how many times I adjusted speed and flip timing, <b>it would not flip</b>. I beleive it is 
+                                due to hardware limitations of my car. Since the motors move at such different rates, and I have a ratio multiplied to one of the wheels, the top speed is 
+                                limited by my slowest wheel and I was unable to reach a fast enough speed for the flip. Here are some of my failed attempts of a flip. Enjoy :)</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> <b>Flip bloopers</b></p>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/gzSEAIw3eUg?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            
+                            <!--------------------------- 2. task B ------------------------------->
+                            <h3 style="margin-top: 70px;" class="mb-0">Task B: Orientation Control</h3>
+
+                            <div class="subheading mb-3">The Task</div>
+                            <div style="margin-top: 20px;">
+                                <p> Since my last stunt failed, I tried the other one. This stunt consists of the robot starting at a designated line (<4m from the wall), drive fast forward, 
+                                    and when the robot is within 3ft (914mm) from the wall, initiate a 180 degree turn and drive back over the line. 
+                                </p>
+                            </div>
+
+                            <div class="subheading mb-3">Setting Up the Code</div>
+                            <div style="margin-top: 20px;">
+                                <p> My strategy for this stunt was very similar to the last, I used the ToF sensor to indicate when I was at the correct distance. Once at the correct 
+                                distance I instantly started the 180 turn then drove back. I decieded to use my orientation PID during the turn to know when the 180 degrees was complete before driving back
+                                at full speed. I made it so I could easily adjust the PID gain values and the target angle for each trial.
+                                I found it vey benificial to set the target angle to less than 180 becuase it was turning quickly and with lots of momentum. So this way it could stop forcing the turn and let
+                                the drifting motion do the rest, before driving back. </p>
+
+                                <p> Here is a screenshot of the motor values I was sending to the car throughout the stunt. As you can see, it is sending a vlaue of 100 (meaning full speed) then varying the speed
+                                as it perfroms the turn, then once again sending it 100 percent speed. All my trials outputted almost an identical graph even if the physical system was not performing the same.</p>
+
+                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab8/motor vals drift.png" alt="..." /></span>
+                            </div>
+
+                            <div class="subheading mb-3">Trials</div>
+                            <div style="margin-top: 20px;">
+                                <p> This stunt went a lot smoother than the last and I was able to get at least 3 succeful runs, but first, enjoy some of the bloopers! (basically me damaging the ToF sensor) </p>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p><b>Turn bloopers</b></p>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/h7wROEQNHvY?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+
+                            <div style="margin-top: 20px;">
+                                <p> Finally, here are my 3 successful trials, along with a screenshot of the PID gains and target angle I was using for each trial. There was a lot of inconsistancies
+                                    even if I did not change anything. Two trials would never look the same because the friction in the wheels and floor was completely variable, but I kept playing 
+                                    around with each trial so it was interesting how I could get similar results with very different parameters.
+                                </p>
+                            </div>
+
+
+                            <div style="margin-top: 20px;">
+                                <p> Succesful Trial 1 </p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab8/trial1.png" alt="..." /></span>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/-Otl8VR0pUw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                             <div style="margin-top: 20px;">
+                                <p> Succesful Trial 2</p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab8/trial3.png" alt="..." /></span>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/yhQOtAn6c_k?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                             <div style="margin-top: 20px;">
+                                <p> Succesful Trial 3</p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab8/trial2.png" alt="..." /></span>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/Uqbpxb1SA1s?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                            
+                            <!--------------------------------- Final discussion -------------------------------->
+                            
+                            <div style="margin-top: 40px;">
+                                <p> Overall,  This lab was a lot harder than I expeceted. I am really starting to see the importance of robust code, many problems came up when going back
+                                to previously done labs so I learned a lot from that. It was crazy to see how much performance is limited by hardware inconsistancies. </p>
+                            </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 9 ------------------------------------->
+<!------------------------------------- Lab 9 ------------------------------------->
+<!------------------------------------- Lab 9 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab9">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 9</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> The objective of this lab is to do a stunt with the car. Now that we have set everything up, we have all the neccissary tools to perform various stunts. The stunt I chose to do is Task A: Position Control and it must be performed in the track set up in lab (to be compared to other students). This lab has a lot of flexibility and I got to play around with what aspects from previous labs would be benificial for my stunt.</p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>1 x R/C stunt car</p>
+                            <p>1 x SparkFun RedBoard Artemis Nano</p>
+                            <p>2 x Li-Po 3.7V 650mAh (or more) battery</p>
+                            <p>2 x Dual motor driver</p>
+                            <p>2 x 4m ToF sensor</p>
+                            <p>1 x 9DOF IMU sensor</p>
+                            <p>1 x Qwiic connector</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">April 10th</span></div>
                     </div>
                         
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <!--------------------------- 1. pre lab ------------------------------->
-                            <h3 class="mb-0">Prelab</h3>
-                            <div class="subheading mb-3">Set up of Debugging Method</div>
+                            <h3 class="mb-0">Task A: Position Control</h3>
+                            <div class="subheading mb-3">The Task</div>
                             <div style="margin-top: 20px;">
-                                <p> In order to debug my system and tune parameters, I was sending an array with all my data after each run. I did this by collecting the data 
-                                    in arrays as my control loop runs, and then once the arrays were full, I sent them over as a large string. In my Python script, I have a 
-                                    notification handler that handles these strings and stores them in a global array called data. So that when I go to graph it, I can parse 
-                                    it by separating commas and graph whatever data I want versus time.
+                                <p> The stunt I chose to preform was task A. This consists of the robot starting at designated line (<4m from the wall), drive fast forward towards the wall, and at 0.5m away, perform a flip, and drive back in the direction from which it came. This stunt will be considered successful if my robot manages to succesfully do a flip. The score will depend on how quickly the car makes it back past the initial starting line.
                                 </p>
                             </div>
 
+                            <div class="subheading mb-3">Setting Up the Code</div>
                             <div style="margin-top: 20px;">
-                                <p> Here are screenshots of how I sent data over Bluetooth from the Arduino code and how I received it in my Python script. In my Arduino, I'm basically 
-                                just appending it into one large string. And my notification handler is always running so it is ready to collect data when it is sent over Bluetooth. </p>
+                                <p> I decided to go back to the linear PID code and start here. I will not be using PID since I dont want the robot to slow down at the goal because it needs momentum for the flip. I chose to use extrapolation with the ToF readings becuase from lab 5, it showed to be very effectie and accurate when dirivng in stright lines. Since the stright line is not too difficult to predict, I dont beleive I need to do kalman filter to get more accuracy, the extrapolation along with tuning parameters will be sufficiant.</p>
 
                                 <div style="display: flex; align-items: flex-start;">
                                     <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab6/sendingData.png" alt="Image 1" /></div>
                                     <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab6/receive data.png" alt="Image 2" /></div>
                                 </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Mapping </p>
+                                <iframe width="630" height="350" src="https://www.youtube.com/embed/_9cvEzRFTuQ?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
                             
                             <!--------------------------- 2. Integrating PID ------------------------------->
@@ -1472,10 +1615,36 @@
                             <div class="subheading mb-3">Setting up PID Implementation</div>
 
                             <div style="margin-top: 20px;">
-                                <p> For the controller, I used PID control. PID stands for proportional, integral and derivitive. This is the formula to calculate the velocity "u" needed to reach a goal. 
-                                    Where error "e" is the differnce between the goal and your current position.</p>
-                                <span class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab5/PID.png" alt="..." /></span>
+                                <p> Drift bloopers</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/h7wROEQNHvY?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Flip bloopers</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/gzSEAIw3eUg?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+
+                            <div style="margin-top: 20px;">
+                                <p> Trial 1</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/-Otl8VR0pUw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                             <div style="margin-top: 20px;">
+                                <p> Trial 2</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/yhQOtAn6c_k?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                             <div style="margin-top: 20px;">
+                                <p> Trial 3</p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/qbpxb1SA1s?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+                             <div style="margin-top: 20px;">
+                                <p> Mapping </p>
+                                <iframe width="650" height="325" src="https://www.youtube.com/embed/_9cvEzRFTuQ?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
 
                             <div style="margin-top: 20px;">
                                 <p> I first started making my PID function called PID_Control_turn that takes in parameters kp, ki, and kd and caluclates 3 values of speed (u). These pu, iu, and du values
@@ -1521,43 +1690,6 @@
                                     or in the context of our car, this could be an issue when switching between set points in one run. In order to prevent this when caluclating the derivitive term, instead of multiplying kd by the differnce in errors
                                     over dt (the issue is that error would jump when the new setpoint is declared), I mupltiplied kd by the difference in angles over dt. This is essentially the same thing becuase if error = goal - distance from goal, this is 
                                     treating it as if the goal is zero degrees (but multiply it by -1). Essentially it corrects in the same manor. You cen see how I implemented this above in my PID function. </p>
-                            </div>
-
-                            <!--------------------------->
-                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning ki</div>
-
-                            <div style="margin-top: 10px;">
-                                <p> Last, I tuned ki to get rid of the steady state error.  This one was much more finnicky and now my method of guessing and checking was not too straight forward. To prevent
-                                integrator wind up, I cuttoff the accumilation of error at 50 and negative 50. This a pretty small cutoff but I did not want my ki to be contributing much anyways since my controller was 
-                                very good as is and I wanted to give no leaneancy for it to wind up. </p>
-                                <p> While keeping kd and kp constant, I started with a value of ki = 0.001, it was instantly unstable.</p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/windup.png" alt="..." /></span>
-                                <p> I figured ki was still to high so I decreased it and this was my result. </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/right sign.png" alt="..." /></span>
-                                <p> Then, I wanted to decrease my overshoot and have it correct faster so I thought to increase both kp and kd. </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/random tuning.png" alt="..." /></span>
-                                <p> As you can see this random tuning approach was not going very well so next I decided to try the heuristic procedure #2 we learned in class. The procedure is as follows: 
-                                <p> 1. Set KD and KI to 0 <br> 2.Increase KP until oscillation, then decrease by factor of 2-4 <br> 3. Increase KI until loss of stability, then back off <br> 4. Increase KD to increase performance in response to disturbance
-                                    <br> 5. Iterate</p>
-                                <p> Here is some of what that process looked like. (not looking great) </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/itoo high.png" alt="..." /></span>
-                                <span class="d-none d-lg-block"><img style="width: 790px; height: auto;" src="images/lab6/tuning apprach1.png" alt="..." /></span>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/d30.png" alt="..." /></span>
-                            </div>
-
-                            <div style="margin-top: 20px;">
-                                <p> So after this approach, I went back to my original controller and I almost gave up on teh integral term, but a key thing that helped my controller improve by a lot is by chanaging the "full scale range" of the 
-                                gyroscope. You can manually set the range of angular velocites that are most optimal for the sensor readings. I increased it to the max range of 2000 deg/sec.</p>
-                                    <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/change full scale range.png" alt="..." /></span>
-                            </div>
-
-                            <div style="margin-top: 20px;">
-                                <p> Another thing that improved my controller was deleting the print statements to increase my sampling rate. I did not relsie how long the pritning
-                                took. Below is my calculation for sampling rate before and after I removed my print statements. It almost halved the time! </p>
-                                <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 115px; width: auto;" src="images/lab6/with print.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 115px; width: auto;" src="images/lab6/without print.png" alt="Image 2" /></div>
-                                </div>
                             </div>
 
 
