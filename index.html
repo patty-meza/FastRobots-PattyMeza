@@ -1271,7 +1271,6 @@
                 </div>
             </section>
 
-
 <!------------------------------------- Lab 7 ------------------------------------->
 <!------------------------------------- Lab 7 ------------------------------------->
 <!------------------------------------- Lab 7 ------------------------------------->
@@ -1572,15 +1571,9 @@
                             <!---------------------------INTRO------------------------------->
                             <h3 class="mb-0">Introduction</h3>
                             <div class="subheading mb-3">Lab Objectives</div>
-                            <p> The objective of this lab is to do a stunt with the car. Now that we have set everything up, we have all the neccissary tools to perform various stunts. The stunt I chose to do is Task A: Position Control and it must be performed in the track set up in lab (to be compared to other students). This lab has a lot of flexibility and I got to play around with what aspects from previous labs would be benificial for my stunt.</p>
+                            <p> The objective of this lab is to build a map of the static room with ToF readings. Or in this case, a map set up in the lab. This map will be later used in localization tasks so it is important that it is somewhat accurate. I will be placeing the robot in various spots in the map while it spins and takes ToF measurements to build the map. I will also be using orientation PID control to strategically spin in angle increments and take a measurement at each each increment.</p>
                             <div class="subheading mb-3">Components</div>
-                            <p>1 x R/C stunt car</p>
-                            <p>1 x SparkFun RedBoard Artemis Nano</p>
-                            <p>2 x Li-Po 3.7V 650mAh (or more) battery</p>
-                            <p>2 x Dual motor driver</p>
-                            <p>2 x 4m ToF sensor</p>
-                            <p>1 x 9DOF IMU sensor</p>
-                            <p>1 x Qwiic connector</p>
+                            <p>1 x Fully assembled robot, with Artemis, TOF sensors, and an IMU</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">April 10th</span></div>
                     </div>
@@ -1588,142 +1581,133 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <!--------------------------- 1. pre lab ------------------------------->
-                            <h3 class="mb-0">Task A: Position Control</h3>
-                            <div class="subheading mb-3">The Task</div>
+                            <h3 class="mb-0">Orientation Control</h3>
+                            <div class="subheading mb-3">Using PID to spin and take measurements.</div>
                             <div style="margin-top: 20px;">
-                                <p> The stunt I chose to preform was task A. This consists of the robot starting at designated line (<4m from the wall), drive fast forward towards the wall, and at 0.5m away, perform a flip, and drive back in the direction from which it came. This stunt will be considered successful if my robot manages to succesfully do a flip. The score will depend on how quickly the car makes it back past the initial starting line.
+                                <p> For the basic overview of my PID control for measurements taking, I start with the same PID controller from lab 6. I collect yaw measurements to get the error and use my PID function to calculate the U values, add the u from the P, I, and D terms together and that's the seed to send to the motor. So this PID sequence is always running but if I hit within 0.8 degrees of my goal more than once I call that officially complete and it can stop motors and take both ToF measurements (front and side). Once the data is taken I see the error to be 11 degrees more than what it currently was and it repeats the process until the goal is 371 (11 more than 360) so that it completes exactly one turn. Here is what my code looks like.
                                 </p>
-                            </div>
-
-                            <div class="subheading mb-3">Setting Up the Code</div>
-                            <div style="margin-top: 20px;">
-                                <p> I decided to go back to the linear PID code and start here. I will not be using PID since I dont want the robot to slow down at the goal because it needs momentum for the flip. I chose to use extrapolation with the ToF readings becuase from lab 5, it showed to be very effectie and accurate when dirivng in stright lines. Since the stright line is not too difficult to predict, I dont beleive I need to do kalman filter to get more accuracy, the extrapolation along with tuning parameters will be sufficiant.</p>
-
                                 <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab6/sendingData.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 180px; width: auto;" src="images/lab6/receive data.png" alt="Image 2" /></div>
+                                    <div style="margin-right: 8px;"><img style="height: 320px; width: auto;" src="images/lab9/pid setup.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 300px; width: auto;" src="images/lab9/pid setup 2.png" alt="Image 2" /></div>
                                 </div>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Mapping </p>
+                                <p> The PID parameters I chose to use were the same as before, but I ended up turning up the proportional term because I'm not too worried about overshooting with such a small angle increment. I wanted it to quickly and sharply go to each goal angle. I had a function to easily change the parameters so I could adjust between trials.
+                                </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab9/setpid.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Proof that my controller works well is as you can see from this video, it is taking quick, sharp turns. And I know it was about 11 degrees because it completed exactly 33 measurements. My robot doesn't drift out of the square, but it is onto a perfect center-axis rotation. I think the error is about half of a tile, so approximately ±3 inches.</p>
                                 <iframe width="630" height="350" src="https://www.youtube.com/embed/_9cvEzRFTuQ?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
-                            
-                            <!--------------------------- 2. Integrating PID ------------------------------->
-                            <h3 style="margin-top: 70px;" class="mb-0">PID Control</h3>
-                            <div class="subheading mb-3">Setting up PID Implementation</div>
+
+                            <!--------------------------- Collecting data  ------------------------------->
+
+                            <h3 style="margin-top: 80px;" class="mb-0">Collecting Data</h3>
+                            <div class="subheading mb-3">Trials</div>
+                            <div style="margin-top: 20px;">
+                                <p> I decided to label each marker on the floor as follows. I also measured out where each point is with respect to the origin (point E) in millimeters because I will need to use these translations to make the final map.</p>
+                                <span class="d-none d-lg-block"><img style="width: 650px; height: auto;" src="images/lab9/labeled map.png" alt="..." /></span>
+                            </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Drift bloopers</p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/h7wROEQNHvY?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> Here is what the graphs looked like after each trial. You can see on the left graph the yaw increases in increments from 0 to 360. On the right graph, the ToF data points look right because the two sensors follow a similar pattern but are offset by about a quarter of the measurement time. This makes sense because the difference in these sensors is 90 degrees.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab9/map data1.png" alt="..." /></span>
+
+                                <p> Here is a close up of the u values from my PID controller.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 400px; height: auto;" src="images/lab9/motor input.png" alt="..." /></span>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Flip bloopers</p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/gzSEAIw3eUg?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> After each trial, I verified it looked as expected using the polar graphing function. It takes in the angle and "r," which are my ToF measurements, and creates a plot in polar coordinates. Here are what all my polar plots looked like after each trial.</p>
                             </div>
-
-
-                            <div style="margin-top: 20px;">
-                                <p> Trial 1</p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/-Otl8VR0pUw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-
-                             <div style="margin-top: 20px;">
-                                <p> Trial 2</p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/yhQOtAn6c_k?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-
-                             <div style="margin-top: 20px;">
-                                <p> Trial 3</p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/qbpxb1SA1s?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-
-                             <div style="margin-top: 20px;">
-                                <p> Mapping </p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/_9cvEzRFTuQ?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-
-
-                            <div style="margin-top: 20px;">
-                                <p> I first started making my PID function called PID_Control_turn that takes in parameters kp, ki, and kd and caluclates 3 values of speed (u). These pu, iu, and du values
-                                    get added together eventually to calculate what is the total value of u (motor speed) required by the system to reach the angle goal. In my main loop, I collect the current data, 
-                                    then I call the PID function to calculate a value of u. Then this u gets passed into both motor functions. Here is what my PID function looks like.</p>
-                                <span class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab6/pid turn.png" alt="..." /></span>
-                            </div>
-                            <div style="margin-top: 20px;">
-                                <p> I made a function so that I can quickly tune the parameters over Bluetooth, so I can adjust them with an iterative approach to find ideal values. I also made a case to update
-                                    the goal angle in real time. Both of these features made tuning paramaters significantly quicker and more effective. Here my case for setting the gains (kp, ki, kd).
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab6/updatek.png" alt="..." /></span>
-                            </div>
-                            <!--------------------------->
-                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning kp</div>
 
                             <div style="margin-top: 10px;">
-                                <p> The first parameter I tuned was kp, starting with kp = 1, ki = 0, and kd = 0. I set the goal angle to 90 degrees and I slowly increased kp until it quickly hit 90 degrees without too
-                                much overshoot and spinning out of control. If it spun too fast, the gyroscope readings would be very inaccurate. I found a kp of 0.15 to be enough to reach the goal and not overshoot
-                                too much for 90 degrees. But once I tried 180 degrees, it would overshoot without the sensor knowing. Here is the video of my test with the goal angle = 180 degrees and only kp.  </p>
-                                <iframe width="650" height="325" src="https://www.youtube.com/embed/NyTlDKSBqzE?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                <p> As you can see in this video it overshoots and is oscillating around that overshoot angle. And below is my graph. Though the graph makes it look good, we know by the the physical test
-                                    that the sensor is misinterperating 180 degrees. </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/off180.png" alt="..." /></span>
+                                <p> Location A 
+                                <span class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/spot1.png" alt="..." /></span>
+                                </p>
                             </div>
 
-                            
-                            <!--------------------------->
-                            <div style="margin-top: 50px;" class="subheading mb-3">Tuning kd</div>
+                            <div style="margin-top: 10px;">
+                                <p> Location B 
+                                <span class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/spot2.png" alt="..." /></span>
+                                </p>
+                            </div>
 
                             <div style="margin-top: 10px;">
-                                <p> Secondly, I tuned kd. Keeping kp the same, I slowly raised the kd until the overshoot was gone. I did it for 90 degrees and then for 180 degrees. Here are two trials while I kept raising kd
-                                with kp = 0.15. This worked much better than kp alone but I was first tuning it to work well with 180 degrees, then when I tested it for 90, it was very slow to reach the goal. Also,
-                                overtime it would still drift away from the setpoint. </p>
-                                <p> <b> Target angle = 90 degrees </b> </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/slow 90.png" alt="..." /></span>
-                                <p> <b> Target angle = -180 degrees </b> </p>
-                                <span class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab6/better 180.png" alt="..." /></span>
+                                <p> Location C 
+                                <span class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/spot3.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Location D 
+                                <span class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/spot4.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 10px;">
+                                <p> Location E 
+                                <span class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/spot5.png" alt="..." /></span>
+                                </p>
+                            </div>
+
+
+
+                            <div class="subheading mb-3">Trasformation matrices</div>
+                            
+                            <div style="margin-top: 20px;">
+                                <p> Now, after taking all the data and storing it in arrays, I used transformation matrices to convert from the car reference frame to the global reference frame. I needed to rotate the frame based on the orientation of the car and translate the frame based on which spot I was taking data from. Here is the general setup of what my matrix multiplication looked like.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: auto; height: 60px;" src="images/lab9/matrices.png" alt="..." /></span>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: auto; height: 60px;" src="images/lab9/matrixeqns.png" alt="..." /></span>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Accoridng to the spec sheet of the IMU, there is a low pass filter that can be controlled with a simple function "setDLPFcfg", but my data was not noisy enough to be affected so I did not implement it. 
-                                    Derivitive kick is also somehting I had to address. Dervitive kick is when there is a sudden jump in the derivative term due to a large change over a short period of time, so this could be due to noisy data, 
-                                    or in the context of our car, this could be an issue when switching between set points in one run. In order to prevent this when caluclating the derivitive term, instead of multiplying kd by the differnce in errors
-                                    over dt (the issue is that error would jump when the new setpoint is declared), I mupltiplied kd by the difference in angles over dt. This is essentially the same thing becuase if error = goal - distance from goal, this is 
-                                    treating it as if the goal is zero degrees (but multiply it by -1). Essentially it corrects in the same manor. You cen see how I implemented this above in my PID function. </p>
+                                <p> Here is how I did this same calculation in code. I ran a for loop for every ToF measurement taken and the corresponding yaw value, to get a point (x, y) to plot. I stored the points in a larger array to graph later. I ran this separately for each location on the map. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 650px; height: auto;" src="images/lab9/matrix code.png" alt="..." /></span>
                             </div>
+
+
+                           <div style="margin-top: 20px;">
+                                <p> Here is what each plot looked like once I converted them all the cartesian instead of polar coordinates. </p>
+                            </div>
+                         
+
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotA.png" alt="Image 1" /></div>
+                                <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotB.png" alt="Image 2" /></div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotC.png" alt="Image 1" /></div>
+                                <div style="margin-left: 20px;"><img style="height: 350px; width: auto;" src="images/lab9/plotD.png" alt="Image 2" /></div>
+                            </div>
+                            <div >
+                                <span style="margin-left: 10px;" class="d-none d-lg-block"><img style="width: 350px; height: auto;" src="images/lab9/plotE.png" alt="..." /></span>
+                            </div>
+                            
 
 
                             <!--------------------------->
-                            <h3 style="margin-top: 60px;" class="mb-0">Final orientation controller</h3>
-                            <div style="margin-top: 10px;" class="subheading mb-3">A few trials to prove that the controller works!</div>
+                            <h3 style="margin-top: 60px;" class="mb-0">Final Map</h3>
+                            <div style="margin-top: 10px;" class="subheading mb-3">Putting it all together!</div>
 
                             <div style="margin-top: 40px;">
-                                <p> I eventually tweaked my gains to a controller I was happy with. My final gain values were <b> kp = 0.35, ki = 0.000015, and kd = 40 </b></p>
-                                
-                                <p> 1. This first trial is with the target angle of <b>90 degrees</b></p>
-                                <iframe width="650" height="355" src="https://www.youtube.com/embed/FK4PR5fT1zI?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 90.png" alt="..." /></span>
+                                <p> I put all 5 sections of points on one graph, and I was very happy to see it form a pretty accurate map. You can see there are some random points throughout, but this is expected based on the quality of the ToF measurements and how often I would get random measurements normally. Next time, I could take a few measurements at each angle and average them. Or I could try a smaller increment in angle when I rotate.</p>
+                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/raw map.png" alt="..." /></span>
                             </div>
 
                             <div style="margin-top: 40px;">
-                                <p> 1. This second trial is with the target angle of <b>180 degrees</b></p>
-                                <iframe width="650" height="355" src="https://www.youtube.com/embed/_LfkKyl9ckY?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 180.png" alt="..." /></span>
-                            </div>
-
-                            <div style="margin-top: 40px;">
-                                <p> 3. This third trial is with the target angle of <b>270 degrees</b></p>
-                                <iframe width="650" height="355" src="https://www.youtube.com/embed/K3IGT48KzmE?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                <span class="d-none d-lg-block"><img style="width: 950px; height: auto;" src="images/lab6/final 270.png" alt="..." /></span>
+                                <p> I drew a line overtop of my map based off of the average location of each wall.</p>
+                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/line.png" alt="..." /></span>
                             </div>
 
                             
                             <!--------------------------------- Final discussion -------------------------------->
                             
                             <div style="margin-top: 40px;">
-                                <p> Overall, I am very happy with my controller performance. a big thing I learned was that in the real world, the equations we use to control our systems and approaches to tune parameters
-                                are just approximations of models, they are a good start but the best way to control your system is by understanding exacly how each component works and it's limitations.
-                                For tuning you need to slowly iterate while understanding the system's resposne.</p>
+                                <p> Overall, I am very happy with my map. I think that the map I ended up with is very representative of the actual map in the lab. I chose not to do any adjustments to straighten out the map because my hypothesis is that the sensor on my robot is pointed slightly crooked. Since I don't know how to make it perfectly straight, I figured it was best to keep the map at an angle if that's what the robot detects too.</p>
                             </div>   
                         </div>
 
