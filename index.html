@@ -36,6 +36,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab7">Lab 7</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 9</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 10</a></li>
                 </ul>
             </div>
         </nav>
@@ -1692,6 +1693,116 @@
                             <!--------------------------->
                             <h3 style="margin-top: 60px;" class="mb-0">Final Map</h3>
                             <div style="margin-top: 10px;" class="subheading mb-3">Putting it all together!</div>
+
+                            <div style="margin-top: 40px;">
+                                <p> I put all 5 sections of points on one graph, and I was very happy to see it form a pretty accurate map. You can see there are some random points throughout, but this is expected based on the quality of the ToF measurements and how often I would get random measurements normally. Next time, I could take a few measurements at each angle and average them. Or I could try a smaller increment in angle when I rotate.</p>
+                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/raw map.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 40px;">
+                                <p> I drew a line overtop of my map based off of the average location of each wall.</p>
+                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/line.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <!--------------------------------- Final discussion -------------------------------->
+                            
+                            <div style="margin-top: 40px;">
+                                <p> Overall, I am very happy with my map. I think that the map I ended up with is very representative of the actual map in the lab. I chose not to do any adjustments to straighten out the map because my hypothesis is that the sensor on my robot is pointed slightly crooked. Since I don't know how to make it perfectly straight, I figured it was best to keep the map at an angle if that's what the robot detects too.</p>
+                            </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 10 ------------------------------------->
+<!------------------------------------- Lab 10 ------------------------------------->
+<!------------------------------------- Lab 10 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab10">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 10</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> The objective of this lab is to ... </p>
+                            <div class="subheading mb-3">Components</div>
+                            <p>Just the Simulation</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">April 17th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- 1. pre lab ------------------------------->
+                            <h3 class="mb-0">Set up Bayes Filter</h3>
+                            <div class="subheading mb-3">I will go back and add explanations here are screenshots to prove I did it</div>
+                            <div class="subheading mb-3">Compute control</div>
+                            <div style="margin-top: 20px;">
+                                <p> compute control </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/computecontrol.png" alt="..." /></span>
+                            </div>
+
+                            <div class="subheading mb-3">Odometry Motion Model</div>
+                            <div style="margin-top: 20px;">
+                                <p> odometry </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
+                            </div>
+
+                            <div class="subheading mb-3">Prediction Step</div>
+                            <div style="margin-top: 20px;">
+                                <p> prediction </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/prediction.png" alt="..." /></span>
+                            </div>
+
+                            <div class="subheading mb-3">Update Step</div>
+                            <div style="margin-top: 20px;">
+                                <p> update </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/update.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------- Collecting data  ------------------------------->
+
+                            <h3 style="margin-top: 80px;" class="mb-0">Path Planning With Bayes</h3>
+                            <div class="subheading mb-3">Trials</div>
+                            <div style="margin-top: 20px;">
+                                <p> Here is half way though executing path</p>
+                                <span class="d-none d-lg-block"><img style="width: 650px; height: auto;" src="images/lab10/after bayes.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Final Map with Ground truth, Odometry, Beleif</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab10/map.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> It had some weird jumps, maybe I should do another trial</p>
+                            </div>
+
+                            
+
+                            <div class="subheading mb-3">Video</div>
+
+                           <div style="margin-top: 20px;">
+                                <p> I will put video below</p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotA.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotB.png" alt="Image 2" /></div>
+                                </div>
+                           </div>
+
+
+                            <!--------------------------->
+                            <h3 style="margin-top: 60px;" class="mb-0">Final Map</h3>
+                            <div style="margin-top: 10px;" class="subheading mb-3">ignore these explanations</div>
 
                             <div style="margin-top: 40px;">
                                 <p> I put all 5 sections of points on one graph, and I was very happy to see it form a pretty accurate map. You can see there are some random points throughout, but this is expected based on the quality of the ToF measurements and how often I would get random measurements normally. Next time, I could take a few measurements at each angle and average them. Or I could try a smaller increment in angle when I rotate.</p>
