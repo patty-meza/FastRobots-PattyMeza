@@ -37,6 +37,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab9">Lab 9</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab10">Lab 10</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab11">Lab 11</a></li>
                 </ul>
             </div>
         </nav>
@@ -1732,9 +1733,7 @@
                             <!---------------------------INTRO------------------------------->
                             <h3 class="mb-0">Introduction</h3>
                             <div class="subheading mb-3">Lab Objectives</div>
-                            <p> The purpose of this lab is to implement grid localization using Bayes filter. I will be doing this only in a simulation in python provided by the class. The simulation has the same map as the one we used in class in other labs. </p>
-                            <div class="subheading mb-3">Components</div>
-                            <p>Just the Simulation</p>
+                            <p> The purpose of this lab is to implement grid localization using Bayes filter. I will be doing this only in a simulation in python provided by the class. The simulation has the same map as the one we used in class in lab 9 and in the next labs.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">April 17th</span></div>
                     </div>
@@ -1743,110 +1742,102 @@
                         <div class="flex-grow-1">
                             <!--------------------------- 1. pre lab ------------------------------->
                             <h3 class="mb-0">Pre-Lab</h3>
-                            <div class="subheading mb-3">What is Bayes Filter?</div>
+                            <div class="subheading mb-3">Localization</div>
                             <div style="margin-top: 20px;">
-                                <p> compute control </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/computecontrol.png" alt="..." /></span>
+                                <p> Robot localization is the process of determining where a mobile robot is located with respect to its environment. Our robot's
+                                state is 3 dimensional and is given by (x,y,theta) wich is called it's pose. Since there are infinisate places where the robto can be within our map, we discretized it using a grid and this is representated in real life by the floor tiles. The size of each grid cell along the x, y, and theta axes are 0.3048 m, 0.3048 meters and 20 degrees, respectively.</p>
                             </div>
 
-                            <!--------------------------- lab  ------------------------------->
+
+                            <!--------------------------- before bayes  ------------------------------->
 
                             <div class="subheading mb-3">Pre-Planned Trajectory</div>
                             <div style="margin-top: 20px;">
-                                <p> here is a video of the trajecotry </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
-                                <p> in this screenshot of the final map you can see... </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
+                                <p> In this lab we were given a file with a a pre-planned collision free trajectory for the robot to take in the simulator. I ran the simulator and it sequentially moved through the map and this is what the final trajectory looked like. The green line is the ground truth (where the robot actually is) and the red line is the odometry (where sensor is telling the robot it is). As you can see the robot has no clue where it is. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab10/preplanned.png" alt="..." /></span>
                             </div>
 
-                            <!--------------------------- lab  ------------------------------->
+                            <!--------------------------- adding bayes ------------------------------->
 
-                            <h3 class="mb-0">Implementing Bayes Filter</h3>
 
-                            <div class="subheading mb-3">Odometry Motion Model</div>
+                    
+                            <h3 style="margin-top: 80px;" class="mb-0">Set up Bayes Filter</h3>
+                            <div class="subheading mb-3">What is A Bayes Filter?</div>
                             <div style="margin-top: 20px;">
-                                <p> odometry </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
+                                <p> A Bayes Filter is a probabilistic algorithm used for estimating the state of a robot based on sensor measurements. It integrates prior knowledge about the system's state with new sensor information, and sensor noise using Bayes' theorem to produce an updated estimate, represented as a probability distribution. A bayes filter uses two steps, A prediction step to incorporate the control input (movement) data and An update step to incorporate the observation (measurement) data. Here is what it looks like. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab10/bay.png" alt="..." /></span>
+                                <p style="margin-top: 10px;"> The code below is the Bayes filter. In our code we are doing these same steps at each timestep in the path. In order to excecute the code below, my task was to complete functions that were used in it.  </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 600px; height: auto;" src="images/lab10/bay code.png" alt="..." /></span>
                             </div>
 
 
-                            <h3 class="mb-0">Set up Bayes Filter</h3>
-                            <div class="subheading mb-3">I will go back and add explanations here are screenshots to prove I did it</div>
-                            <div class="subheading mb-3">Compute control</div>
+                            
                             <div style="margin-top: 20px;">
-                                <p> compute control </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/computecontrol.png" alt="..." /></span>
+                                <div class="subheading mb-3">Compute Control Function</div>
+                                <p> The compute_control function is to calculate the necisary control action "u" which encompases (rotation 1, translation, and rotation 2) required to move between previous pose and current pose. I used these equations to calculate it.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab10/controls eqn.png" alt="..." /></span>
+                                <p> This is what my code looks after implementing these equations</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab10/computecontrol.png" alt="..." /></span>
                             </div>
 
-                            <div class="subheading mb-3">Odometry Motion Model</div>
+
+                            
                             <div style="margin-top: 20px;">
-                                <p> odometry </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
+                                <div class="subheading mb-3">Odometry Motion Model</div>
+                                <p> Next I used my compute_control function to make the odom_motion_mode function. This function calculates the probabiliy of the transition of the state from the previous pose to current pose parameters. It uses a gausian model and two variables that were earlier defined for noise (odom_rot_noise and odom_trans_noise). To get the total probability, the probabilities of rot1, rot2 and trans1 were multiplied. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 550px; height: auto;" src="images/lab10/mot.png" alt="..." /></span>
+                                <p style="margin-top: 20px;" > And here is what the actual function looks like.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab10/odom.png" alt="..." /></span>
                             </div>
 
-                            <div class="subheading mb-3">Prediction Step</div>
+                            
                             <div style="margin-top: 20px;">
-                                <p> prediction </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/prediction.png" alt="..." /></span>
+                                <div class="subheading mb-3">Prediction Step</div>
+                                <p> Now that we have the helper functions compute_control(cur_pose, prev_pose), and odom_motion_model(cur_pose, prev_pose, u), I made a function for the prediciton step. In the prediciton step we need to iterate over the entire grid for the previous and current pose and updates previous belief (bel_bar) with the odometry motion model probability and the current beleif. Since these nested for loops are obviously very computationally expensive I said to treat any beleif less than 0.0001 as zero to save time. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab10/prediction.png" alt="..." /></span>
                             </div>
 
-                            <div class="subheading mb-3">Update Step</div>
+                            <div class="subheading mb-3">Sensor Model</div>
                             <div style="margin-top: 20px;">
-                                <p> update </p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/update.png" alt="..." /></span>
+                                <p> The purpose of this function is given the true sensor observations, to caluclate their probability for each one and put it in a 1D array of size 18. This uses the sensor noise variable and calculates probability as a gaussian distribution.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab10/sensor.png" alt="..." /></span>
+                                <p style="margin-top: 10px;"> Since there are multiple individual measurements, the sensor model has to mupliply all the probabiliies together to get the likelihood of the 18 measurements given a state. For this equation, we need to assume that individual measurements are independent. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 450px; height: auto;" src="images/lab10/sensor model.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <div style="margin-top: 20px;">
+                                <div class="subheading mb-3">Update Step</div>
+                                <p> Lastly, I completed the update step function update_step(). This function updates the current beliefs with the sensor model and the previous beliefs. I also normalized the belief to prevent floating point underflow. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab10/update.png" alt="..." /></span>
                             </div>
 
                             <!--------------------------- Collecting data  ------------------------------->
 
-                            <h3 style="margin-top: 80px;" class="mb-0">Path Planning With Bayes</h3>
+                            <h3 style="margin-top: 80px;" class="mb-0">Results of Localization with Bayes</h3>
                             <div class="subheading mb-3">Trials</div>
                             <div style="margin-top: 20px;">
-                                <p> Here is half way though executing path</p>
-                                <span class="d-none d-lg-block"><img style="width: 650px; height: auto;" src="images/lab10/after bayes.png" alt="..." /></span>
+                                <p> I ran it a few times and it was sometimes successful, but sometimes it would get lost. I wanted to show this example because it was able to localize pretty well for the first half; there are more unique features and sections of the walls with fewer corners. However, in the second half, after moving over the box, this area is much less distinct and has more corners to pass over, so it struggled with localization. You can see in this video the robot's belief jumped around when it was in the middle of the field. This is a harder area to localize because of the big angles between each measurement, especially when there are corners; there is a lot of the map that gets skipped. This could be improved with more frequent measurements (but then computation gets more expensive).</p>
+                                 <iframe width="830" height="500" src="https://www.youtube.com/embed/lYKkcsjs0Dw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
 
                             <div style="margin-top: 20px;">
-                                <p> Final Map with Ground truth, Odometry, Beleif</p>
-                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 800px; height: auto;" src="images/lab10/map.png" alt="..." /></span>
+                                <p> Here is a slighly better trial and the map that resulted. It still got very confused at the end and kept adjusting the final position becuase that area is so hard to localize.  </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab10/better.png" alt="..." /></span>
                             </div>
 
+                            
                             <div style="margin-top: 20px;">
-                                <p> It had some weird jumps, maybe I should do another trial</p>
+                                <div class="subheading mb-3">Best Trial</div>
+                                <p> And finally, this is my best map.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab10/best.png" alt="..." /></span>
+                                <p> As you can see the bayes filter is very impressive, the red shows the odometry model wich is still really inaccurate, but the blue belief closelly follows the green ground truth path, especially close to walls where there are easy to locate and distinct map obsticales.</p>
                             </div>
 
                             
-
-                            <div class="subheading mb-3">Video</div>
-
-                           <div style="margin-top: 20px;">
-                                <p> I will put video below</p>
-
-                                <div style="display: flex; align-items: flex-start;">
-                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotA.png" alt="Image 1" /></div>
-                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab9/plotB.png" alt="Image 2" /></div>
-                                </div>
-                           </div>
-
-
-                            <!--------------------------->
-                            <h3 style="margin-top: 60px;" class="mb-0">Final Map</h3>
-                            <div style="margin-top: 10px;" class="subheading mb-3">ignore these explanations</div>
-
-                            <div style="margin-top: 40px;">
-                                <p> I put all 5 sections of points on one graph, and I was very happy to see it form a pretty accurate map. You can see there are some random points throughout, but this is expected based on the quality of the ToF measurements and how often I would get random measurements normally. Next time, I could take a few measurements at each angle and average them. Or I could try a smaller increment in angle when I rotate.</p>
-                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/raw map.png" alt="..." /></span>
-                            </div>
-
-                            <div style="margin-top: 40px;">
-                                <p> I drew a line overtop of my map based off of the average location of each wall.</p>
-                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab9/line.png" alt="..." /></span>
-                            </div>
-
                             
-                            <!--------------------------------- Final discussion -------------------------------->
-                            
-                            <div style="margin-top: 40px;">
-                                <p> Overall, I am very happy with my map. I think that the map I ended up with is very representative of the actual map in the lab. I chose not to do any adjustments to straighten out the map because my hypothesis is that the sensor on my robot is pointed slightly crooked. Since I don't know how to make it perfectly straight, I figured it was best to keep the map at an angle if that's what the robot detects too.</p>
+                            <div style="margin-top: 60px;">
+                                <p> In conclusion, using a probabilistic model is very important in robot localization and path planning. Sensor noise is not the full story; the robot's capabilities to take measurements at certain times and positions are crucial, and you can see how quickly errors can stack up. The Bayes filter is just one example of a model and approach that works, but it requires a lot of computation and it's a slow process to localize between each step. I'm glad we did this in simulation first.</p>
                             </div>   
                         </div>
 
