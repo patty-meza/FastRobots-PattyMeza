@@ -38,6 +38,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab9">Lab 9</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab10">Lab 10</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab11">Lab 11</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab12">Lab 12</a></li>
                 </ul>
             </div>
         </nav>
@@ -1818,7 +1819,7 @@
                             <div class="subheading mb-3">Trials</div>
                             <div style="margin-top: 20px;">
                                 <p> I ran it a few times and it was sometimes successful, but sometimes it would get lost. I wanted to show this example because it was able to localize pretty well for the first half; there are more unique features and sections of the walls with fewer corners. However, in the second half, after moving over the box, this area is much less distinct and has more corners to pass over, so it struggled with localization. You can see in this video the robot's belief jumped around when it was in the middle of the field. This is a harder area to localize because of the big angles between each measurement, especially when there are corners; there is a lot of the map that gets skipped. This could be improved with more frequent measurements (but then computation gets more expensive).</p>
-                                 <iframe width="830" height="500" src="https://www.youtube.com/embed/lYKkcsjs0Dw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                 <iframe width="830" height="50" src="https://www.youtube.com/embed/lYKkcsjs0Dw?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
                             </div>
 
                             <div style="margin-top: 20px;">
@@ -1845,6 +1846,116 @@
                     </div>
                 </div>
             </section>
+
+<!------------------------------------- Lab 11 ------------------------------------->
+<!------------------------------------- Lab 11 ------------------------------------->
+<!------------------------------------- Lab 11 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab11">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 11</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> The purpose of this lab is to implement grid localization using Bayes filter on our actual robot. The robot will use the update step in Bayes filter based on full 360-degree scans with the ToF sensor. We will practice this observation loop on 4 marked spots in the map in our lab. This map is identical to the one that was used in simulation.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">April 24th</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- code and setup ------------------------------->
+                            <h3 class="mb-0">Pre-Lab</h3>
+                            <div class="subheading mb-3">Data Collection</div>
+                            <div style="margin-top: 20px;">
+                                <p> This is the function perform_observation_loop(self, rot_vel=120) in Python that commands the robot to perform the observation loop and collect data. The observation loop consists of the robot rotating 360 with 20-degree increments and taking ToF sensor data with just the sensor on the front. After collecting 18 measurements, it will send back all the data over Bluetooth for my notification handler to receive, and this function handles the data and turns them into column vectors called sensor_ranges and sensor_bearings, which are essentially distance and yaw readings, respectively.</p>
+                                 <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 900px; height: auto;" src="images/lab11/code.png" alt="..." /></span>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p> Here is the video of my robot spinning and collecting data. In order for it to spin 20 degrees in increments accurately, I am using the IMU yaw data to do PID as it hits every goal angle. I am happy with my PID as it starts and finishes almost exactly in the same spot after 18 turns.</p>
+                                <iframe width="700" height="400" src="https://www.youtube.com/embed/7kFvKfW6dw4?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+                                <p style="margin-top: 20px;"> I repeated this localization turn process at four different points on the map: A, B, C, and D. Here is where each of those points is located. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab9/labeled map.png" alt="..." /></span>
+                            </div>
+
+
+
+                            <!--------------------------- adding bayes ------------------------------->
+
+
+                    
+                            <h3 style="margin-top: 80px;" class="mb-0">Results</h3>
+                            <div class="subheading mb-3">Maps after localization</div>
+                            <div style="margin-top: 20px;">
+                                <p> These maps were generated after collecting data. The blue dot represents the belief after the loop, and the green dot represents the ground truth. I also used the polar plot function after each trial. It was helpful for debugging because when the robot could not localize, I could get a sense of how accurate the points it measured were.</p>
+                                <p> This first map is at point <b>A</b> </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/spot a.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/a.png" alt="Image 2" /></div>
+                                </div>
+
+                                <p> I was surprised at how accurate this one got it. I did not even see the belief dot underneath the blue, but in the video, you can just see that it was underneath. I think this one was the most accurate because it has the most distinct since it is enclosed by 3 walls and a box. There is only one small part where it took some noisy measurements, but most of them you can see in the polar plot are very representative of the surrounding walls.</p>
+                                <iframe width="700" height="400" src="https://www.youtube.com/embed/r0Dn9y2On-Q?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+
+
+                            
+                            <div style="margin-top: 50px;">
+                                <p> This map is at point <b>B</b></p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/spot b.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/b.png" alt="Image 2" /></div>
+                                </div>
+                                <p> This is one of my worst maps, and I think it really struggled with the corners of the boxes. The corners of the boxes are tricky because of how big of an angle increment we are using (20 degrees). It could easily fall right before or after a corner, and that leads to a huge difference in measurements. The flatter the obstacle is, the greater difference 20 degrees makes. You can see half of the polar plot is not making out clear shapes, so it's not supporting that the belief estimate was a bit more than a foot off. </p>
+                            </div>
+
+
+                            
+                            <div style="margin-top: 50px;">
+                                <p> This map is at point <b>C</b></p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/spot c.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/c.png" alt="Image 2" /></div>
+                                </div>
+                                <p> This one was better than the last and only appears to be off by about 8 inches. Being tucked into this corner is a bit easier to recognize, especially since the box is much closer, and it is able to take readings on both sides of the box corner. I also wanted to try adding the length of the car from the center of rotation to the ToF measurements each time because the ToF is at the front of the car, but it's assuming it is in the middle of the square. When I added the few centimeters on there was not really any difference, as you can see in the image below. So, I decided not to continue doing that. I think that there is so much more error than the length of the car that it does not change anything. </p>
+
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 480spx; height: auto;" src="images/lab11/with added lenght.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <div style="margin-top: 50px;">
+                                <p> This map is at point <b>D</b></p>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/spot d.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 340px; width: auto;" src="images/lab11/d.png" alt="Image 2" /></div>
+                                </div>
+                                <p> I am surprised at how I got a good reading for this point. It took a few tries to get this one to put its prediction near the ground truth since this point is so far from the obstacles and it has 5 different corners it passes over in its rotation. It ended up being less than a foot off from the ground truth, so I consider it very successful.</p>
+                            </div>
+
+                            <!--------------------------- Collecting data  ------------------------------->
+
+
+                            <div style="margin-top: 60px;">
+                                <p> In conclusion, I think my real-life localization was great. I believe a significant reason for its success was the accuracy of my PID turn. Each 20-degree increment was consistent, and the car didn't drift much within the square. I've observed how detrimental sensor noise can be, and a probabilistic model like Bayes filter is crucial for determining trustworthiness. I'm also grateful for having the most optimized version of the localization code because I can imagine how awful it would be to debug this process. From not knowing if there's a syntax error to implementing the model incorrectly and using bad noise parameters, or it could simply be hardware causing inaccurate localization. My robot kept performing the loop then thinking it was somewhere completely wrong on the map. Simply by resetting it all, I was finally able to get a good reading. </p>
+                            </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+
 
         </div>
         <!-- Bootstrap core JS-->
