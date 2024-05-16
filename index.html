@@ -14,6 +14,16 @@
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <style>
+                .navbar-nav .nav-link {
+                    font-size: 17px; /* Adjust the font size as needed */
+                    padding-top: 3px; /* Adjust the top padding */
+                    padding-bottom: 3px; /* Adjust the bottom padding */
+                    padding-left: 30px; /* Add left padding */
+                    text-align: left; /* Align text to the left */
+                    margin-left: 15px; /* Add left margin */
+                }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -26,19 +36,19 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Home</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab1">Lab 1</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab1.2">Lab 1.2</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab2">Lab 2</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab3">Lab 3</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 4</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab5">Lab 5</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab6">Lab 6</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab7">Lab 7</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab9">Lab 9</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab10">Lab 10</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab11">Lab 11</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab12">Lab 12</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab1">Lab 1: Artemis Setup</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab1.2">Lab 1.2: Bluetooth</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab2">Lab 2: IMU</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab3">Lab 3: ToF Sensor</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab4">Lab 4: Motor driver</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab5">Lab 5: Linear PID</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab6">Lab 6: Orientation PID</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab7">Lab 7: Kalman Filter</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab8">Lab 8: Stunt</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab9">Lab 9: Mapping</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab10">Lab 10: Localization (sim)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab11">Lab 11: Localization (real)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lab12">Lab 12: Path Planning</a></li>
                 </ul>
             </div>
         </nav>
@@ -1948,6 +1958,120 @@
                             <div style="margin-top: 60px;">
                                 <p> In conclusion, I think my real-life localization was great. I believe a significant reason for its success was the accuracy of my PID turn. Each 20-degree increment was consistent, and the car didn't drift much within the square. I've observed how detrimental sensor noise can be, and a probabilistic model like Bayes filter is crucial for determining trustworthiness. I'm also grateful for having the most optimized version of the localization code because I can imagine how awful it would be to debug this process. From not knowing if there's a syntax error to implementing the model incorrectly and using bad noise parameters, or it could simply be hardware causing inaccurate localization. My robot kept performing the loop then thinking it was somewhere completely wrong on the map. Simply by resetting it all, I was finally able to get a good reading. </p>
                             </div>   
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+<!------------------------------------- Lab 12 ------------------------------------->
+<!------------------------------------- Lab 12 ------------------------------------->
+<!------------------------------------- Lab 12 ------------------------------------->
+        
+            <hr class="m-0" />
+            <section class="resume-section" id="lab12">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 12</h2>
+
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!---------------------------INTRO------------------------------->
+                            <h3 class="mb-0">Introduction</h3>
+                            <div class="subheading mb-3">Lab Objectives</div>
+                            <p> Now that we have built up the entire system, The purpose of this lab is to have the robot navigate through a set of waypoints in that environment as quickly and accurately as possible. The map is the same as the previous 3 labs and the robot must perform one loop. This lab is very open endded, so I tried a few strategies to reach the goal.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">May 1st</span></div>
+                    </div>
+                        
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <!--------------------------- code and setup ------------------------------->
+                            <h3 class="mb-0">Planned Strategy</h3>
+                            <div style="margin-top: 20px;">
+                                <p> The image below is the map with each waypoint that we need to hit. As you can see, there are many waypoints and they are pretty close together so I think it would take a very long time to localize at each one and it might just be unnecessary.</p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab12/lettermap.png" alt="..." /></span>
+                                <p style="margin-top: 20px;"> The hardest parts to localize in are B, C, H, and I, I learned this in the previous real localization lab because of the many corners and varying distances the sensor has to read. On the other hand, the easiest and most consistantly correct points to localize in are E, F, and G. From the bayes localization simulation lab, I noticed that the hardest part to get round was the box in the top right (Basically E to G). So luckily since the hardest part to get across is also the easiest part to localize in, I saw the opportunity to create a more reliable strategy. My plan was to do closed loop or open loop control for the first half of the map, then localize in the more difficult area, then closed/open loop control to get to the end.</p>
+                                <p>The following are the steps and path I will take to get from start to end.</p>
+                                <p>1. Start at A, used open or closed loop to pass through B,C,D,E </p>
+                                <p>2. Preform localization and adjust position if too far for both F and G. </p>
+                                <p>3. Use open or closed loop to drive to H and I.</p>
+                            </div>
+
+
+                            <h3 style="margin-top: 60px;" class="mb-0">Set Up</h3>
+
+                            <div class="subheading mb-3">Testing Feedback Control</div>
+                            <div style="margin-top: 10px;">
+                                <p> I had to go back to my previous code and make sure everything was still working as expected, I wanted to test my orientation and position PID control because the accuracy of my path excecution was very dependent on them. I also wanted to add a feature so that during a linear motion, it is constantly taking yaw measurements and at the end, if the the car veered off too much (more than 6 degrees) it can correct itself. Here is a video of my implementation of this feature.</p>
+                                <iframe width="700" height="400" src="https://www.youtube.com/embed/-ETDB9u3UEE?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p> Although it seemed like it worked at a short distance, Once I put my robot in the real map, it performed very poorly. I think because some of the walls were too far away and at and angle, with the map also being obsticle dense, it kept moving randomly and crashing into walls. For this reason decided not to use the linear PID becuase it was not accurate nor reliable if I wanted to hit multiple waypoints without localizing. My orientaitn PID was working great so I kept that for all my turns.  </p>
+                            </div>
+
+
+                            <div style="margin-top: 20px;" class="subheading mb-3">Open Loop Calibration</div>
+                            <div style="margin-top: 10px;">
+                                <p> I knew it would be tedious and long if I just played around with timing the robot to stop at each point on the map. To make this much eaiser I dicided to find a relationship between distance and time. I first chose to always move at 30% speed for consistancy, and I knew slower would probably lead to less error. Then I measured marker 1 foot apart up to 5 feet. Then I played aorund with timing to hit each points a few times and recorded the averge timing. Lastly, I plotted these points and tried to fit a function ontop that would connect them. It is not a linear relationship as expedcted because the robot takes a while to reach a terminal velocty so it is usually accelerating, and once it has momentum it is going  to drive further. I found a square root function that matched the points pretty accuratly so I used this equation to make an easy fucntion in python. In the function, I input the distance in feet and it calcualtes the time to run the car at and excsutes the movement. This made adjusting the open loop control to hit all the waypoints very easy and it turned out to be pretty accurate on the map. </p>
+                                <span style="margin-top: 10px;" class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab12/sqrt.png" alt="..." /></span>
+                                <p style="margin-top: 10px;"> This is the equation. </p>
+                                <span class="d-none d-lg-block"><img style="width: 500px; height: auto;" src="images/lab12/eqn.png" alt="..." /></span>
+                                <p style="margin-top: 10px;"> Here is what part of my code looks like for the open loop drivng and closed loop turning to hit waypoints A through E.</p>
+                                <span class="d-none d-lg-block"><img style="width: 700px; height: auto;" src="images/lab12/hard code.png" alt="..." /></span>
+
+                            </div>
+
+                            <h3 style="margin-top: 60px;" class="mb-0">Localization Sequence</h3>
+                            <div class="subheading mb-3">Code</div>
+                            <div style="margin-top: 20px;">
+                                <p> My localization sequence moves from waypoints F to H. An overview of what this code does is first profroms the 360 turn to get the observation data. Then with this data, I call the update_step() function to get the current belief of the pose of the robot, for x y and theta in the global frame. I then compare what point it is suposed ot be on (gorund truth at thsat waypoint) and the currnet beelif to see hwo far it is. Using pathagoriean theorum i check the diatce and if it is furhter than 1 foot away I move tell the robot to drive towards that goal points and redo the localization step. It will keep doung this until the beief is within a foot of the waypoint. If it is within a foot it saysy that it is close enough ajust contineus on to the next waypont. </p>
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="margin-right: 8px;"><img style="height: 350px; width: auto;" src="images/lab12/path plan 1.png" alt="Image 1" /></div>
+                                    <div style="margin-left: 8px;"><img style="height: 350px; width: auto;" src="images/lab12/path plan 2.png" alt="Image 2" /></div>
+                                </div>
+                                <p> Honestly, this part of my sequence did not work great becuase my localization was not very accurate. Even when the position was pretty close, the angle would become an issue. Since we are using discretized angles of 20 degrees, if it was slighly off, it would think it is 20 degrees away wich would completely disorient it and it would never find the point. If I were to redo this, I would figure out how to impelment the magnetometer on the IMU to get the absolute angle in the global frame.</p>
+                            </div>
+
+
+
+                            <!--------------------------- Testing ------------------------------->
+                    
+                            <h3 style="margin-top: 80px;" class="mb-0">Testing</h3>
+                            
+                            
+                            <div class="subheading mb-3">First Success!</div>
+                            <div style="margin-top: 20px;">
+                                <p> This was the first time it compeleted the map. It is pretty slow in between steps because I was looking at the results and manually running each block of code at this stage. As you can see, the localization was off in the first attmept but I told it to continue anyways and that way ended up getting all the way around!</p>
+                                <iframe width="700" height="400" src="https://www.youtube.com/embed/3lXUsAk4VH4?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                                <p> I wanted to show this video to prove that my method worked multiple times and it did comeplete it succefully a few times. I'm not saying it is perfectly robust, but in this map which is known, I think it did a great job of meeting the goal quickly. Below is the map that it created. </p>
+                                <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab12/trial1.png" alt="..." /></span>
+                            </div>
+
+                            
+                            <!--------------------------- Final run ------------------------------->
+
+                            <h3 style="margin-top: 80px;" class="mb-0">Best Run</h3>
+                            <div style="margin-top: 20px;">
+                                <p> Here is my video of the best run. You can see me pan to the localization during the run. It sucessfully localized in both F and G and determined that it was within the range.</p>
+                                <iframe width="800" height="450" src="https://www.youtube.com/embed/BuL5bOBsepo?rel=0&modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+                                <p style="margin-top: 20px;"> Here is the graph it produced. The green is the ground truth and the blue is the belief from localization. I can't say that this is the best method becuase the beleif is not very accurate to what was really hapeneing. But overall im happy I got the closed loop control precise and the localization gave some sort of state awareness. </p>
+                               <span class="d-none d-lg-block"><img style="width: 750px; height: auto;" src="images/lab12/trial2.png" alt="..." /></span>
+                            </div>
+
+                            <!--------------------------- Conclusion ------------------------------->
+
+                            <div style="margin-top: 50px;" class="subheading mb-3">Conclusion</div>
+                            <div >
+                                <p> In conclusion ,this class was really hard and really rewarding! The janky sensors and my code structure really got me in the last two labs but I learned soooo much. If I were to redo it I think all of my code would be much better structured becuase sometimes I did not know when to blame the hardware or just my code. Special thanks to all the TA's and Jonathan Jaramillo, this class is probably my favorite cornell class I have taken!</p>
+                            </div>
+
+                           
+
+
+                            
                         </div>
 
 
